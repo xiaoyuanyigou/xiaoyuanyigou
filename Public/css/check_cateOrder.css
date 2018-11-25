@@ -1,0 +1,36 @@
+
+.stepInfo{background:#f2f2f2;margin:10px auto 0 auto;width:100%;}
+.status p{margin-left:1em;
+          font-size:1em;
+          height:1.5em;
+          line-height:1.5em;
+
+  }
+.stepInfo ul{list-style: none;
+             background: #6CD0F6;
+             width: 100%;
+             height: 0.15em;}
+.stepInfo li{float:left;width:20%;height:0.15em;background:#bbb;}
+.stepIco {
+    border:4px solid white;
+    border-radius: 1.2em;
+    padding: 0.03em;
+    background: #6CD0F6;
+    text-align: center;
+    line-height: 1.5em;
+    color: #fff;
+    position: absolute;
+    width: 1.0em;
+    height: 0.9em;
+    font-size: 0.8em;
+    padding-top: 0.2em;
+}
+.stepIco1{top:-0.5em;left:25%;}
+.stepIco2{top:-0.5em;left:45%;}
+.stepIco3{top:-0.5em;left:65%;}
+
+.stepli {
+    margin-left: 25%;
+}
+
+.stepText{color:#666;padding-top:1.0em;width:4em;text-align:center;margin-left:-1.4em;}

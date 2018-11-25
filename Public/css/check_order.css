@@ -1,0 +1,45 @@
+*{padding:0em;margin:0em;}
+body{z-index: 10;}
+.weui-cells{margin-top:0.5em;}
+.weui-form-preview__label,.weui-form-preview__value{color:black;}
+.timg{display:block;width: 3em;height:3em;margin:0 auto;}
+.hr{width:100%;height:0.3em;}
+.hr img{display:block;width:100%;height:100%;}
+.address{background: white;overflow: hidden;}
+.select{display:block;text-align:center;padding-top:1.5em;padding-bottom:1.5em;color:#909090;width:100%;height:100%;}
+.name-tel{width:100%;overflow: hidden;}
+.name,.tel{width:50%;height:2em;float:left;}
+.icon{width:2em;height:2em;float:left;}
+.icon img{width:1.6em;height:1.5em;padding:0.3em 0em 0em 0.6em;}
+.text{height:2em;float:left;line-height: 2em;}
+.detail{clear:both;}
+.detail p{line-height: 1.2em;padding:0em 0.6em 0.4em 0.8em;}
+
+.pro{width:100%;height:6.5em;background: white;}
+.img{width:35%;height:100%;float:left;}
+.img img{display:block;width:80%;height:5.5em;padding-left:0.7em;padding-top:0.5em;}
+.pro-name{width:55%;height:60%;float:left;}
+.pro-name p{line-height: 1.5em;padding-top:0.4em;
+/*文字溢出用省略号代替*/
+overflow:hidden;display:-webkit-box;text-overflow:ellipsis;
+-webkit-line-clamp:2;-webkit-box-orient: vertical;}
+.num{width:10%;height:60%;float:right;}
+.num p{padding-top:0.4em;text-align: right;padding-right:0.5em;color:#949494;}
+.price{width:32.5%;height:40%;float:left;}
+.price p{line-height: 2em;}
+.standard{width:32.5%;height:40%;float:right;}
+.standard p{text-align: right;padding-right:0.5em;line-height: 2em;color: #949494;/*文字溢出用省略号代替*/
+overflow:hidden;display:-webkit-box;text-overflow:ellipsis;
+-webkit-line-clamp:1;-webkit-box-orient: vertical;}
+
+.time-price{width:100%;margin-bottom:4em;background: white;}
+.order-price{text-align: right;padding-right:0.5em;}
+.order-price span{color:red;font-size: 1.2em;}
+.time{text-align:right;color:#949494;padding-right:0.5em;padding-bottom:0.5em;}
+.fixed{width:100%;height:3.5em;z-index: 50;background: white;position: fixed;bottom:0em;border-top: 0.05em solid #E8E8E8;}
+#topNav {width: 100%;/*overflow: hidden;*/}
+#topNav .swiper-slide {padding: 0 0.5em;width:auto;text-align:center;}
+.fixed a{float:right;width:auto;height:2.3em;padding-left:0.5em;padding-right:0.5em;text-align:center;line-height:2.3em;border-radius: 0.5em;margin-left:0.5em;margin-top:0.6em;}
+.noraml{border:0.01em solid black;color:black;}
+.red{color:white;background:#E43A3D;}
+.bg{width:100%; height:100%; position:fixed; left:0; top:0; z-index:100; background:#000; opacity:0.5;display:none;}

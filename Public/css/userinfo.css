@@ -1,0 +1,22 @@
+*{padding:0;margin:0;}
+body{font-family: "Microsoft yahei";background:#EEEEEE;}
+a{text-decoration: none;color:black;-webkit-tap-highlight-color:rgba(255,255,255,0);}
+div,img{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+.timg{display:block;width:3em;height:3em;margin:6em 10.5em;}
+.wrap{width:24em;background: white;margin-top:0.7em;}
+.headimg{width:22.6em;height:5em;margin:0 auto;}
+.img{width:4em;height:4em;margin-top:0.5em;float:left;}
+.img img{width:100%;height:100%;border-radius: 50%;}
+.arrow{width:4em;height:4em;float:right;margin-top:0.5em;text-align:right;}
+.arrow a{color:#949494;line-height: 4em;}
+.arrow img{width:0.7em;height:1.26em;position: relative;top:0.25em;}
+
+.row{width:22.6em;height:3.4em;margin:0 auto;border-bottom: 0.01em solid #E8E8E8;}
+.left-text{width:6em;height:3.4em;float:left;line-height: 3.4em;}
+.left-text p{font-size: 1.2em;}
+.right-input{width:16.6em;height:3.4em;float:left;}
+.right-input input{width:100%;height:100%;border:none;outline: 0;font-size: 1.2em;font-family: "Microsoft yahei";color:#949494;text-align: right;}
+
+.right-input img{width:0.7em;height:1.26em;float:right;padding-top:1.28em;}
+
+.save{opacity:0.5;width:22em;height:3em;background:#33AFED;margin:1em;line-height: 3em;text-align: center;color:white;border-radius:0.5em;-webkit-tap-highlight-color:rgba(255,255,255,0);}

@@ -1,0 +1,48 @@
+*{padding:0em;margin:0em;}
+body{background: #EEEEEE;font-family: "Microsoft Yahei";}
+.timg{display:block;width: 3em;height:3em;margin:0 auto;}
+.cart-list .weui-cell{padding:0.1em 0.4em 0.4em 0.4em;}
+.weui-cells{margin-top:0em;margin-bottom:0.5em;}
+.weui-cells:before{border:none;}
+.weui-cells:after{border:none;}
+.weui-cells_checkbox .weui-check:checked + .weui-icon-checked:before{
+  content:'\EA06';
+  color:#FF7900;
+}
+.header{width:100%;height:2.5em;background: #FF7900;line-height: 2.5em;}
+.cart-title{width:30%;height:100%;float:left;margin-left:35%;text-align: center;}
+.delete{width:3em;text-align:center;float:right;}
+
+.cart-list{width:100%;margin-bottom:3.5em;}
+.pro-info{width:90%;height:100%;float:left;}
+
+.pro{width:100%;height:100%;background:  white;}
+.img{width:30%;height:100%;float:left;}
+.img img{display:block;width:80%;height:4.5em;padding-left:0.7em;padding-top:0.5em;}
+.pro-name{width:55%;height:60%;float:left;}
+.pro-name p{line-height: 1.5em;padding-top:0.4em;
+/*文字溢出用省略号代替*/
+overflow:hidden;display:-webkit-box;text-overflow:ellipsis;
+-webkit-line-clamp:2;-webkit-box-orient: vertical;}
+.num{width:10%;height:60%;float:right;}
+.num p{padding-top:0.4em;text-align: right;padding-right:0.5em;color:#949494;}
+.price{width:32.5%;height:40%;float:left;}
+.price p{line-height: 2em;}
+.standard{width:32.5%;height:40%;float:right;}
+.standard p{text-align: right;padding-right:0.5em;line-height: 2em;color: #949494;
+	/*文字溢出用省略号代替*/
+overflow:hidden;display:-webkit-box;text-overflow:ellipsis;
+-webkit-line-clamp:1;-webkit-box-orient: vertical;}
+
+.fixed{width: 100%;height:3em;background:white;position:fixed;bottom:0em;border-top: 0.05em solid #E8E8E8;}
+.all-check{width:32%;height:100%;float:left;}
+.weui-cells{height:100%;}
+.all-price{width:43%;height:100%;float:right;text-align: right;line-height: 3em;}
+.all-price p{padding-right:0.4em;}
+.all-price span{color:#FF7900;}
+.count{width:25%;height:100%;float:right;background:#FF7900;text-align: center;line-height: 3em;color:white;}
+
+.null{display:block;width:7em;height:6.44em;margin:0 auto;padding-top:2em;}
+.null-text{color:gray;text-align: center;padding-bottom: 1.5em;}
+
+.buy{display:block;background: white;width:5em;height:2.5em;border:0.01em solid gray;border-radius: 0.5em;color:gray;text-align: center;line-height: 2.5em;margin:0 auto;}

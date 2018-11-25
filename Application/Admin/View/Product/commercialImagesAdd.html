@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>智谷科技后台管理框架 - WPP - 基本表单</title>
+    <meta name="keywords" content="WPP,后台HTML,响应式后台">
+    <meta name="description" content="WPP是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+	
+	<link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+	<link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+	
+    <link rel="stylesheet" href="__PUBLIC__/admin_css/plugins/iCheck/custom.css" >
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin_css/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin_css/demo/webuploader-demo.css">
+</head>
+
+<body class="gray-bg" >
+    <div class="wrapper wrapper-content animated fadeInRight">
+		<div class="form-horizontal">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+							<h5>添加商品描述图片 </h5>
+							<div class="ibox-tools">
+								<a class="collapse-link">
+									<i class="fa fa-chevron-up"></i>
+								</a>
+								<a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+									<i class="fa fa-wrench"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-user">
+									<li><a href="form_basic.html#">选项1</a>
+									</li>
+									<li><a href="form_basic.html#">选项2</a>
+									</li>
+								</ul>
+								<a class="close-link">
+									<i class="fa fa-times"></i>
+								</a>
+							</div>
+						</div>	
+						
+							<div class="col-sm-12" style="clear:both">							
+								<div class="ibox-content">
+									<div class="page-container">
+										
+										<div id="uploader" class="wu-example">
+											<div class="queueList">
+												<div id="dndArea" class="placeholder">
+													<div id="filePicker"></div>
+													<p>或将图片拖拽到此处</p>
+												</div>
+											</div>
+											<div class="statusBar" style="display:none;">
+												<div class="progress">
+													<span class="text">0%</span>
+													<span class="percentage"></span>
+												</div>
+												<div class="info"></div>
+												<div class="btns">
+													<div id="filePicker2"></div>
+													<div class="uploadBtn">开始上传</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>								
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-5">
+									<button class="btn btn-primary"  style="margin-left:20px" onclick="backToInfo()">确定</button>
+									<button class="btn btn-white" onclick="backTo()">取消</button>
+								</div>
+							</div>		 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+    </div>
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/admin_js/content.js?v=1.0.0"></script>
+
+    <!-- iCheck -->
+    <script src="__PUBLIC__/admin_js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+	
+    <!-- Web Uploader -->
+    <script type="text/javascript">
+        // 添加全局站点信息
+        var BASE_URL = '__PUBLIC__/admin_js/plugins/webuploader';
+    </script>
+	
+    <script src="__PUBLIC__/admin_js/plugins/webuploader/webuploader.min.js"></script>
+
+    <script src="__PUBLIC__/admin_js/demo/webuploader-demo1.js"></script>
+	 <script type="text/javascript">
+
+ 	$(document).ready(function () {
+ 		var id = getParam('proId');
+      	if(id==null){
+			alert("非法操作");
+			window.location.href="commercialList";//定向到首页	
+		}	
+		
+    });
+ 		/*获取参数的函数*/
+ 	function getParam(paramName) { 
+	    paramValue = "", isFound = !1; 
+	    if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) { 
+	        arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0; 
+	        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++ 
+	    } 
+		return paramValue == "" && (paramValue = null), paramValue 
+	} 
+/*-------------------------------------------------------------------------------------------*/
+		/*取消按鈕*/
+	function backTo(){
+
+		window.history.back();//上级页面 
+	}
+		/*跳转到商品详情页面*/
+	function backToInfo(){
+		var id = getParam('proId');
+		window.location.href = "commercialInfo?proId=" +id;
+	}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>智谷科技后台管理框架 - WPP - 数据表格</title>
+    <meta name="keywords" content="WPP,后台HTML,响应式后台">
+    <meta name="description" content="WPP是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="__PUBLIC__/admin_css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <style>
+        img {
+            width: 150px;
+            height: 80px;
+        }
+        .gradeC h4{/*文字溢出用省略号代替*/
+            overflow:hidden;display:-webkit-box;text-overflow:ellipsis;
+            -webkit-line-clamp:2;-webkit-box-orient: vertical;}
+    </style>
+</head>
+
+<body class="gray-bg" onload="showList()">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>商品列表</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th >商品图片</th>
+                                    <th>描述</th>
+                                    <th>分类</th>
+                                    <th>销量</th>
+                                    <th>库存</th>
+                                    <th colspan="1" style="display:none"></th> 
+                                </tr>
+                            </thead>
+                            <tbody class="table-info">
+                                             
+                            </tbody>
+                            
+                        </table>
+                    <button class="btn btn-primary" onclick="addCommercial()">添加商品</button>
+                    </div>
+                </div>
+            </div>
+        </div>           
+    </div>
+    <script>
+   
+    /**
+     * 页面加载的时候，
+     * 
+     * 
+     */
+    function showList(){
+        $.ajax({
+            type:"post",
+            cache:false,
+            url:"productList",
+            dataType:"json",
+
+            beforeSend:function(){
+
+            },
+            success:function(data){
+                var obj = JSON.parse(data);
+                var htmlInfo = "";
+                var countList = 0;  //记录有多少条记录
+
+                if(0==obj.result){
+                    alert("查询商品列表失败");
+                }
+                else if(1==obj.result){
+                    countList = obj.count;
+                    if(countList<1){
+                        alert("商品列表为空");
+                    }
+                    else{
+                       for(var i=0;i<countList;i++){
+                        htmlInfo += 
+                                '<tr class="gradeC">'+  
+                                    '<td width="150px">'+
+                                        '<a href="commercialInfo?proId='+obj.data[i].pro_id+'">'+
+                                        '<img src="'+obj.data[i].image_url+'" title="查看详情" alt="" class="img-rounded">'+
+                                        '</a>'+
+                                    '</td>'+
+                                    '<td width="250px">'+
+                                        '<h4>'+obj.data[i].pro_name+'</h4>'+
+                                        '<p class="col-sm-offset-1">'+obj.data[i].standard_name+'<span>&yen;'+obj.data[i].standard_price+'(默认规格)</span>'+
+                                        '</p>'+
+                                    '</td>'+
+                                    '<td width="190px">'+obj.data[i].sort_name+'</td>'+
+                                    '<td>'+obj.data[i].standard_sales+'</td>'+
+                                    '<td>'+obj.data[i].standard_inventory+'</td>'+
+                                    '<td width="130px" >'+
+                                        '<button class="btn btn-primary" style="margin-right:10px" onclick="modifyInfo('+obj.data[i].pro_id+')">修改</button>'+
+                                        '<button class="btn btn-warning" onclick="deletePro('+obj.data[i].pro_id+')">下架</button>'+
+                                    '</td>'+
+                                '</tr>';
+                       }//end for 
+                    }//end else
+                }//end else
+               
+                $(".table-info").append(htmlInfo);
+                $('.dataTables-example').dataTable();   //加载表格中的信息
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            },
+            complete: function() {
+            }
+
+        })
+    }
+
+    /**
+     * 三个按钮对应的event
+     */
+    function addCommercial(){
+        window.location.href ="commercialAdd";
+    } 
+    function modifyInfo(proId){
+        window.location.href="commercialModify?proId="+proId;
+    }
+    function deletePro(id){
+        if(confirm("确定下架？")){
+            $.ajax({
+                type:"post",
+                cache:false,
+                data:{"proId":id},
+                url:"deleteProduct",
+                dataType:"json",
+                success:function(data){
+                    var obj = JSON.parse(data);
+
+                    if(2==obj.result){
+                        alert("缺少参数");
+                    }else if(0==obj.reult){
+                        alert("下架失败");
+                    }else if (1==obj.result){
+                        alert("下架成功");
+                        document.location.reload();//当前页面 
+                    }//end else if
+                }//end success
+            }) 
+        }//end if
+    }//end deletePro
+
+  
+    </script>
+    <!-- 全局js -->
+    <script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/admin_js/content.js?v=1.0.0"></script>
+
+
+    <script src="__PUBLIC__/admin_js/plugins/jeditable/jquery.jeditable.js"></script>
+
+    <!-- Data Tables -->
+    <script src="__PUBLIC__/admin_js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/admin_js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+</body>
+
+</html>

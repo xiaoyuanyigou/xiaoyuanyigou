@@ -1,0 +1,28 @@
+*{margin:0em;padding:0em;}
+body{font-family: "Microsoft Yahei";}
+.state{width:100%;height:5.5em;}
+.left{width:3.5em;height:100%;float:left;}
+.icon{width:1.8em;height:1.8em;border-radius:50%;}
+.state .icon{margin:1.4em 0.85em 0em 0.85em;background:#1AAD19;}
+.state .icon img{width:1.3em;height:1.3em;padding:0.25em;}
+.line{width:0.4em;height:2.4em;margin:0 auto;margin-top: -0.1em;}
+.state .line{background: #1AAD19;}
+.text{width:70%;height:100%;float:left;}
+.title{font-size: 1.1em;}
+.state .title{padding-top:1.1em;color:#1AAD19;}
+.state .desc,.state .time{color:#909090;font-size: 0.9em;padding-top:0.3em;}
+
+.unknow{width:100%;height:5.5em;}
+.unknow .icon{margin:0 auto;background: #DADADA;}
+.unknow .line{background: #DADADA;}
+.unknow .title{padding-top:0.7em;color:#909090;}
+.unknow .icon img{width:1.3em;height:0.91em;padding:0.445em 0.25em;}
+
+.result{width:100%;height: 5.5em;}
+.result .icon{margin:0 auto;background: #1AAD19;}
+.result .line{background: #1AAD19;}
+.result .title{padding-top:0.4em;color:#1AAD19;}
+.result .icon img{width:1.3em;height:0.91em;padding:0.445em 0.25em;}
+.unknow .desc,.unknow .time,.result .desc,.result .time{color:#909090;font-size: 0.9em;}
+
+.reason{width:85%;height:2.6em;background:#1AAD19;color:white;line-height: 2.6em;text-align: center;border-radius: 0.5em;margin:1em 7.5%;}

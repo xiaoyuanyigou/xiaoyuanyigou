@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提现列表</title>
+    <link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper wrapper-content animated">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        提现列表
+                    </div>
+                    <div class="panel-body">
+                         <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"  value=""><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 全部</a>
+                                </li>
+                                <li class=""  value="0"><a data-toggle="tab" href="#tab-2" aria-expanded="false">待审核</a>
+                                </li>
+                                <li class=""  value="1"><a data-toggle="tab" href="#tab-3" aria-expanded="false">已通过</a>
+                                </li>
+                                <li class=""  value="2"><a data-toggle="tab" href="#tab-4" aria-expanded="false">未通过</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        
+                                    </div>
+                                </div>
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        
+                                    </div>
+                                </div>
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        
+                                    </div>
+                                </div>
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="panel-body">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+       
+
+
+        <div id="modal-form" class="modal fade" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p>请输入不通过的原因</p>
+
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label>原因：</label>
+                                        <input type="text" placeholder="请输入原因" class="form-control" id="reason">
+                                        <input type="hidden" id="wid">
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-sm btn-primary pull-right" type="submit" onclick="confirm()"><strong>确定</strong>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- 全局js -->
+<script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+<script src="__PUBLIC__/admin_js/plugins/layer/layer.min.js"></script>
+<script>
+    $(function(){
+        //页面加载默认加载全部
+        var loading;
+        $.ajax({
+            type:'post',
+            cache:false,
+            data:{status:''},
+            url:"withdrawListHandel",
+            dataType:"json",
+            beforeSend:function(){
+                loading = layer.load();
+            },
+            success:function(data){
+                if(data.result==1){
+                    appendWithdrawData(data.data,0);
+                }else if(data.result==3){
+                    var contain = $('.tab-content>div').eq(0).children(".panel-body");
+                    contain.append('<table><p style="text-align:center">提现列表为空</p></table>');
+                }
+            },
+            complete: function(){
+                layer.close(loading);
+            }
+        });
+    });
+    $(".nav-tabs li").click(function(){
+        var index = $(this).index();
+        var con = $('.tab-content>div').eq(index).children(".panel-body");
+        if(con.children('.ibox').length==0){
+            var status = $(this).attr("value");
+            //页面加载默认加载全部
+            var loading;
+            $.ajax({
+                type:'post',
+                cache:false,
+                data:{status:status},
+                url:"withdrawListHandel",
+                dataType:"json",
+                beforeSend:function(){
+                    loading = layer.load();
+                },
+                success:function(data){
+                    if(data.result==1){
+                        appendWithdrawData(data.data,index);
+                    }else if(data.result==3){
+                        var contain = $('.tab-content>div').eq(index).children(".panel-body");
+                        contain.append('<table class="ibox"><p style="text-align:center">提现列表为空</p></table>');
+                    }
+                },
+                complete: function(){
+                    layer.close(loading);
+                }
+            });
+        }
+    });
+    function appendWithdrawData(data,index){
+        var contain = $('.tab-content>div').eq(index).children(".panel-body");
+        var html = '<div class="ibox float-e-margins">'+
+                        '<div class="ibox-content">'+
+                            '<table class="table table-bordered">'+
+                                '<thead>'+
+                                    '<tr>'+
+                                        '<th>店铺名称</th>'+
+                                        '<th>真实姓名</th>'+
+                                        '<th>提现金额</th>'+
+                                        '<th>申请时间</th>'+
+                                        '<th>状态</th>'+
+                                        '<th>操作</th>'+
+                                    '</tr>'+
+                                '</thead>'+
+                                '<tbody>';
+        for(var i=0;i<data.length;i++){
+            html += '<tr>'+
+                        '<td>'+data[i].shop_name+'</td>'+
+                        '<td>'+data[i].real_name+'</td>'+
+                        '<td>'+data[i].count+'</td>'+
+                        '<td>'+data[i].apply_time+'</td>'+
+                        '<td>';
+                        if(data[i].status==0){
+                            html += '<span class="label label-warning">待审核</span>';
+                        }else if(data[i].status==1){
+                            html += '<span class="label label-primary">已通过</span>';
+                        }else{
+                            html += '<span class="label label-danger">未通过</span>';
+                        }
+                html += '</td>'+
+                        '<td>'+
+                            '<button type="button" class="btn btn-w-m btn-primary" onclick="agreeWithdraw('+data[i].id+')">通过</button>'+
+                            '<botton data-toggle="modal" data-id="'+data[i].id+'" class="btn btn-w-m btn-danger" style="margin-left:10px;" onclick="defuse()" data-target="#modal-form">拒绝</botton>'+
+                        '</td>'+
+                    '</tr>';
+        }
+                html += '</tbody>'+
+                        '</table>'+
+                    '</div>'+
+                '</div>';
+        contain.append(html);             
+    }
+    function agreeWithdraw(id){
+        $.post("withdrawAgree",{id,id},function(data){
+            if(data.result==1){
+                alert("操作成功！");
+                window.location.reload();
+            }else if(data.result==3){
+                alert("不符合条件！");
+            }else{
+                alert("出错了！");
+            }
+        },'json');
+    }
+    //将提现ID传到模态窗口里
+    function defuse(){
+        var modal = $("#modal-form");
+        modal.on("show.bs.modal", function(e) {    
+            // 这里的btn就是触发元素，即你点击的删除按钮
+            var btn = $(e.relatedTarget),
+            id = btn.data("id"); 
+            $("#wid").val(id);
+        })
+    }
+    function confirm(){
+        var id = $("#wid").val();
+        var reason = $("#reason").val();
+        $.post("disagreeWithdraw",{id:id,reason:reason},function(data){
+            if(data.result==1){
+                alert("操作成功！");
+                window.location.reload();
+            }else if(data.result==2){
+                alert("缺少参数！");
+            }else if(data.result==4){
+                alert("请输入原因！");
+            }else if(data.result==3){
+                alert("不符合条件！");
+            }else{
+                alert("出错了！");
+            }
+        },'json');
+    }
+</script>
+</html>

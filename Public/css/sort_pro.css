@@ -1,0 +1,40 @@
+*{padding:0;margin:0;}
+body{font-family: "Microsoft yahei";background:#EEEEEE;}
+li{list-style: none;-webkit-tap-highlight-color:rgba(255,255,255,0);}
+div,img{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+a{text-decoration: none;}
+.search-wrap{width:24em;height:3.4em;position:fixed;top:0em;background:#EEEEEE;z-index:100;}
+.search{width:22.6em;height:2em;margin:0.5em 0.7em;}
+.icon{width:2em;height:2em;float:left;background: white;border-top-left-radius:0.5em;border-bottom-left-radius:0.5em;}
+.icon img{width:1.6em;height:1.6em;padding-top:0.2em;padding-left:0.4em;}
+.input{width:15.6em;height:2em;float:left;}
+.input input{width:100%;height:100%;border:none;outline: 0;font-size: 1em;font-family:"Microsoft yahei";border-top-right-radius:0.5em;border-bottom-right-radius:0.5em;}
+.submit{width:4.4em;height:2em;float:right;background: white;text-align: center;line-height: 2em;border-radius: 0.5em;color:gray;}
+
+/*tab标签栏样式*/
+.tab-list{width:24em;height:2.5em;background: white;position:fixed;top:3.4em;z-index:100;}
+.tab-list li{width:6em;height:2.5em;float:left;text-align: center;line-height: 2.5em;}
+.cur{border-bottom: 0.01em solid red;color:red;}
+.tab-contain{width:24em;background: white;margin-top: 6em;overflow: hidden;z-index: 10;}
+.tab-contain>div{display:none;}
+.blank{width:24em;height:0.1em;}
+.timg{width:2em;height:2em;margin:0 auto;}
+.wrap{width:22.6em;height:6em;margin:0.8em 0.7em;}
+.left{width:6em;height:6em;float: left;}
+.left img{width:100%;height:100%;}
+.right{width:16.6em;height:6em;float:left;}
+.name{padding-left:0.8em;
+		/*文字溢出用省略号代替*/
+			overflow:hidden;display:-webkit-box;text-overflow:ellipsis;
+			-webkit-line-clamp:2;-webkit-box-orient: vertical;
+	}
+.price{font-size: 1.2em;color:red;padding-left:0.7em;padding-top:1em;}
+
+.null{width:7em;height:9em;margin:8em 8.5em 1em 8.5em;}
+.null img{width:6.6em;height:6.1em;padding-left:0.2em;}
+.null p{text-align: center;font-size: 1.1em;color:gray;}
+
+
+/*蛋糕列表*/
+.cate{width:24em;background:white;margin-top:4em;overflow: hidden;z-index: 10;}
+.cate>div{display:none;}

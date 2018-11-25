@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg" onload="loadBaseInfo()">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-4">
+		        <div class="ibox">
+		            <div class="ibox-content">
+		                <h5>本月销售额</h5>
+		                <h1 class="no-margins" id="sale-rice">0</h1>
+		                <div class="stat-percent font-bold text-navy">98% <i class="fa fa-bolt"></i></div>
+		                <small>截止时间：<php>echo date("Y-m-d H:i:s",time());</php></small>
+		            </div>
+		        </div>
+		    </div>
+		    <div class="col-sm-4">
+		        <div class="ibox">
+		            <div class="ibox-content">
+		                <h5>本月订单数</h5>
+		                <h1 class="no-margins" id="order-num">0</h1>
+		                <div class="stat-percent font-bold text-danger">98% <i class="fa fa-bolt"></i></div>
+		                <small>截止时间：<php>echo date("Y-m-d H:i:s",time());</php></small>
+		            </div>
+		        </div>
+		    </div>
+		    <div class="col-sm-4">
+		        <div class="ibox">
+		            <div class="ibox-content">
+		                <h5>系统用户总数</h5>
+		                <h1 class="no-margins" id='user-num'>0</h1>
+		                <div class="stat-percent font-bold text-navy">98% <i class="fa fa-bolt"></i></div>
+		                <small>截止时间：<php>echo date("Y-m-d H:i:s",time());</php></small>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>最近七天系统订单数</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="flot-chart">
+                            <div class="flot-chart-content" id="flot-line-chart-order"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>最近七天销售额</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="flot-chart">
+                            <div class="flot-chart-content" id="flot-line-chart-sale"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</body>
+<script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+ <!-- Flot -->
+<script src="__PUBLIC__/admin_js/plugins/flot/jquery.flot.js"></script>
+<script src="__PUBLIC__/admin_js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="__PUBLIC__/admin_js/plugins/flot/jquery.flot.resize.js"></script>
+<script src="__PUBLIC__/admin_js/plugins/flot/jquery.flot.pie.js"></script>
+<script>
+	function loadBaseInfo(){
+		getAllSalePriceInMonth();
+		getOrderNumInMonth();
+		getUserNum();
+		thisWeekOrderNum();
+		getThisWeekSalePriceSum();
+	}
+	function getAllSalePriceInMonth(){
+		$.post("getAllSalePriceInMonth",{},function(data){
+			var obj = eval("("+data+")");
+			if(obj.result==2){
+				$("#sale-rice").text(0);
+			}else if(obj.result==0){
+				alert("出错了，刷新试试！");
+			}else{
+				$("#sale-rice").text(obj.data);
+			}
+		},'json');
+	}
+	function getOrderNumInMonth(){
+		$.post("getOrderNumInMonth",{},function(data){
+			var obj = eval("("+data+")");
+			if(obj.result==0){
+				alert("出错了，刷新试试！");
+			}
+			if(obj.result==1){
+				$("#order-num").text(obj.data);
+			}
+		},'json');
+	}
+	function getUserNum(){
+		$.post("getUserNum",{},function(data){
+			var obj = eval("("+data+")");
+			if(obj.result==0){
+				alert("出错了，刷新试试！");
+			}
+			if(obj.result==1){
+				$("#user-num").text(obj.data);
+			}
+		},'json');
+	}
+	/*最近七天订单数折线图*/
+	function thisWeekOrderNum(){
+		$.post("getThisWeekOrderNum",{},function(data){
+			var obj = eval("("+data+")");
+			var arr = (obj.data).split(",");
+
+			var barOptions = {
+		        series: {
+		            lines: {
+		                show: true,
+		                lineWidth: 2,
+		                fill: true,
+		                fillColor: {
+		                    colors: [{
+		                        opacity: 0.0
+		                    }, {
+		                        opacity: 0.0
+		                    }]
+		                }
+		            }
+		        },
+		        xaxis: {
+		            tickDecimals: 0
+		        },
+		        colors: ["#1ab394"],
+		        grid: {
+		            color: "#999999",
+		            hoverable: true,
+		            clickable: true,
+		            tickColor: "#D4D4D4",
+		            borderWidth:0
+		        },
+		        legend: {
+		            show: false
+		        },
+		        tooltip: false,
+		        tooltipOpts: {
+		            content: "x: %x, y: %y"
+		        }
+			    };
+			var barData = {
+			        label: "bar",
+			        data: [
+			            [1, arr[0]],
+			            [2, arr[1]],
+			            [3, arr[2]],
+			            [4, arr[3]],
+			            [5, arr[4]],
+			            [6, arr[5]],
+			            [7, arr[6]]
+			        ]
+		    };
+	    	$.plot($("#flot-line-chart-order"), [barData], barOptions);
+
+		},'json');
+		
+	}
+	function getThisWeekSalePriceSum(){
+		$.post("getThisWeekSalePriceSum",{},function(data){
+			var obj = eval("("+data+")");
+			var arr = (obj.data).split(",");
+			var barOptions = {
+		        series: {
+		            lines: {
+		                show: true,
+		                lineWidth: 2,
+		                fill: true,
+		                fillColor: {
+		                    colors: [{
+		                        opacity: 0.0
+		                    }, {
+		                        opacity: 0.0
+		                    }]
+		                }
+		            }
+		        },
+		        xaxis: {
+		            tickDecimals: 0
+		        },
+		        colors: ["#1ab394"],
+		        grid: {
+		            color: "#999999",
+		            hoverable: true,
+		            clickable: true,
+		            tickColor: "#D4D4D4",
+		            borderWidth:0
+		        },
+		        legend: {
+		            show: false
+		        },
+		        tooltip: false,
+		        tooltipOpts: {
+		            content: "x: %x, y: %y"
+		        }
+			    };
+			var barData = {
+			        label: "bar",
+			        data: [
+			            [1, arr[0]],
+			            [2, arr[1]],
+			            [3, arr[2]],
+			            [4, arr[3]],
+			            [5, arr[4]],
+			            [6, arr[5]],
+			            [7, arr[6]]
+			        ]
+		    };
+	    	$.plot($("#flot-line-chart-sale"), [barData], barOptions);
+
+		},'json');
+	}
+</script>
+</html>

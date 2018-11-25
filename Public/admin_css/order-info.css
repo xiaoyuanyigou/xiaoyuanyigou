@@ -1,0 +1,21 @@
+li{
+    text-align: left
+}
+li strong{
+        color:blue;
+     }
+   
+li i{
+        margin-right:5px;
+     }
+     ul{
+        list-style: none;
+        margin-left:60px;
+     }
+
+hr{
+  height:1px;border:none;border-top:1px dashed #0066CC;
+}
+img{
+   
+}

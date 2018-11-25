@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>添加分类</title>
+	<link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/plugins/iCheck/custom.css" rel="stylesheet">
+</head>
+<body class="gray-bg" onload="loadFirstSort()">
+	<div class="wrapper wrapper-content animated fadeInRight">
+	  	<div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>添加分类 <small>你可以分别添加任何一级的分类</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="form_basic.html#">选项1</a>
+                                </li>
+                                <li><a href="form_basic.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-4 b-r">
+                                <h3 class="m-t-none m-b">添加一级分类</h3>
+                                <p></p>
+                                <div class="form-group">
+                                    <!-- <label>一级分类名称</label> -->
+                                    <input type="text" id="first-input" placeholder="请输入一级分类名称" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" style="padding-left:0px;">是否推荐首页
+                                    </label>
+                                    <div class="radio i-checks first">
+                                        <label>
+                                            <input type="radio" value="1" name="b"> <i></i> 是</label>
+                                        <label>
+                                        <input type="radio" value="0" name="b" checked> <i></i>否</label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-left m-t-n-xs" id="one-submit" onclick="addFirstSort()"><strong>添加</strong>
+                                    </button>
+                                </div>
+                            </div>
+                           
+							<div class="col-sm-4 b-r">
+                                <h3 class="m-t-none m-b">添加二级分类</h3>
+                                <p></p>
+                                <div class="form-group">
+                                    <!-- <label>密码</label> -->
+                                   <select class="form-control m-b" name="account" id="tw-first">
+                                        <option value="-1">请选择一级分类</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <!-- <label>用户名</label> -->
+                                    <input type="text" id="two-input" placeholder="请输入二级分类名称" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" style="padding-left:0px;">是否推荐首页
+                                    </label>
+                                    <div class="radio i-checks second">
+                                        <label>
+                                            <input type="radio" value="1" name="a"> <i></i> 是</label>
+                                        <label>
+                                        <input type="radio" value="0" name="a" checked> <i></i>否</label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button class="btn btn-sm btn-primary m-t-n-xs" id="two-submit" onclick="addSecondSort()"><strong>添加</strong>
+                                    </button>
+                                </div>
+                            </div>
+							
+							<div class="col-sm-4 b-r">
+                                <h3 class="m-t-none m-b">添加三级分类</h3>
+                                <p></p>
+                                <div class="form-group">
+                                    <!-- <label>密码</label> -->
+                                   <select class="form-control m-b" name="account" id="tr-first" onchange="loadChildrenSort(this)">
+                                        <option value="-1">请选择一级分类</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <!-- <label>密码</label> -->
+                                   <select class="form-control m-b" name="account" id="second" id="tr-second">
+                                        <option value="-1">请选择二级分类</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <!-- <label>用户名</label> -->
+                                    <input type="text" id="three-input" placeholder="请输入三级分类名称" class="form-control">
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary m-t-n-xs" id="three-submit" onclick="addThridSort()"><strong>添加</strong>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin_js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    
+    function loadFirstSort(){
+        //二级分类推荐到首页
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+        $.post("getFirstSort",{},function(data){
+            var obj = eval("("+data+")");
+            if(obj.result==0){
+                alert("出错了！");
+                return false;
+            }else if(obj.result==3){
+                alert("当前分类为空，请添加分类！");
+            }else{
+                var html = "";
+                for(var i=0;i<(obj.data).length;i++){
+                    html += "<option value='"+(obj.data[i]).id+"'>"+(obj.data[i]).sort_name+"</option>";
+                }
+                $("#tr-first").append(html);
+                $("#tw-first").append(html);
+            }
+            
+        },'json');
+    }
+    function loadChildrenSort(event){
+        var pid = $(event).find("option:selected").val();
+        $.post("getChildrenSort",{parentId:pid},function(data){
+            var obj = eval("("+data+")");
+            if(obj.result==2||obj.result==0){
+                alert("出错了！");
+                return;
+            }
+            if(obj.result==1){
+                if(obj.data=="null"||obj.data==""){
+                    $("#second option").remove();
+                    $("#second").append("<option value='-1'>请选择二级分类</option>");
+                }else{
+                    var html = "";
+                    for(var i=0;i<(obj.data).length;i++){
+                        html += "<option value='"+(obj.data[i]).id+"'>"+(obj.data[i]).sort_name+"</option>";
+                    }
+                    $("#second option").remove();
+                    $("#second").append(html);
+                }
+            }
+        },'json');
+    }
+    function addFirstSort(){
+        var name = $("#first-input").val();
+        var pid = 0;
+        var recommend = $(".first").find("input:radio[name='b']:checked").val();
+        if(name==""){
+            alert("请填一级分类名称！");
+            return false;
+        }
+        $.post("addSort",{parentId:pid,sortName:name,recommend:recommend},function(data){
+            var obj = eval("("+data+")");
+            if(obj.result==2||obj.result==0){
+                alert("出错了！");
+            }
+            if(obj.result==1){
+                alert("添加成功");
+                window.location.reload();
+            }
+        },'json');
+    }
+    function addSecondSort(){
+        var name = $("#two-input").val();
+        var pid = $("#tw-first").find("option:selected").val();
+        var recommend = $(".second").find("input:radio[name='a']:checked").val();
+        if(name==""){
+            alert("请输入二级分类名称！");
+            return false;
+        }
+        if(pid==""){
+            alert("出错了！");
+            return false;
+        }
+        if(pid==-1){
+            alert("未选择父级分类");
+            return false;
+        }
+        $.post("addSort",{parentId:pid,sortName:name,recommend:recommend},function(data){
+            var obj = eval("("+data+")");
+            if(obj.result==2||obj.result==0){
+                alert("出错了！");
+            }
+            if(obj.result==3){
+                alert("请选择一级分类！");
+            }
+            if(obj.result==1){
+                alert("添加成功");
+                window.location.reload();
+            }
+
+        },'json');
+    }
+    function addThridSort(){
+        var first = $("#tr-first").find("option:selected").val();
+        var second = $("#second").find("option:selected").val();
+        var name = $("#three-input").val();
+        if(first==-1){
+            alert("请选择一级分类！");
+            return false;
+        }
+        if(second==-1){
+            alert("请先添加二级分类，再添加三级分类！");
+            return false;
+        }
+        if(name==""){
+            alert("请输入分类名称！");
+            return false;
+        }
+        $.post("addSort",{parentId:second,sortName:name,recommend:0},function(data){
+            var obj = eval("("+data+")");
+            if(obj.result==2||obj.result==0){
+                alert("出错了！");
+            }
+            if(obj.result==3){
+                alert("请选择二级分类！");
+            }
+            if(obj.result==1){
+                alert("添加成功");
+                window.location.reload();
+            }
+        },'json');
+
+    }
+    $("#check-code").click(function(){
+        $(this).attr("src","../User/verifyCode");
+    });
+</script>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标题模块商品设置列表</title>
+    <link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">    
+    <!-- Data Tables -->
+    <link href="__PUBLIC__/admin_css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <style>
+        img {
+            width: 150px;
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+	<div class="wrapper wrapper-content animated">
+		<div class="panel panel-primary">
+	        <div class="panel-heading">
+	            标题模块商品设置列表
+	        </div>
+	        <div class="panel-body">
+				<div class="tabs-container">
+                    <div class="panel-body">
+						<div class="table-responsive">
+                           <!--  <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>商品图片</th>
+                                        <th>商品名称</th>
+                                        <th>所属店铺</th>
+                                        <th>轮播图</th>
+                                        <th>商品模块</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>商品图片</td>
+                                        <td>南昌大学天健园22栋</td>
+                                        <td>校园易购旗舰店</td>
+                                        <td>否</td>
+                                        <td>否</td>
+                                        <td>
+                                            <a href="setFocus" class="btn btn-outline btn-primary">置为轮播图</a>
+                                            <a href="" class="btn btn-outline btn-danger">放商品模块</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> -->
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>商品图片</th>
+                                    <th>商品名称</th>
+                                    <th>所属店铺</th>
+                                    <th>所属分类</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-info">
+                                   
+                            </tbody>
+                        </table>
+                    </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</body>
+<!-- 全局js -->
+<script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+<!-- Data Tables -->
+<script src="__PUBLIC__/admin_js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="__PUBLIC__/admin_js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="__PUBLIC__/admin_js/plugins/layer/layer.min.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+    var fid = GetQueryString("fid");
+    var tmid = GetQueryString("tmid");
+	$(function(){
+        var loading;
+		$.ajax({
+			type:'post',
+			cache:false,
+			data:{sid:fid},
+			url:"getAllProductByFirstSortId",
+			dataType:"json",
+            beforeSend:function(){
+                loading = layer.load();
+            },
+			success:function(data){
+				if(data.result==0){
+					alert("出错了！");
+				}else if(data.result==3){
+					alert("商品为空！");
+				}else if(data.result==2){
+                    alert("缺少参数！");
+                }else{
+					var html = '';
+					for(var i=0;i<data.data.length;i++){
+						html += '<tr class="gradeX">'+
+                                    '<td><img src="'+data.data[i].img_path+'" alt="" /></td>'+
+                                    '<td width="250px">'+data.data[i].name+'</td>'+
+                                    '<td>'+data.data[i].shop_name+'</td>'+
+                                    '<td class="center">'+data.data[i].sort_name+'</td>'+
+                                    '<td class="center"><a href="setTitleModule?pid='+data.data[i].pid+'&tmid='+tmid+'" class="btn btn-outline btn-primary">设置到该标题模块下</a>'+
+                                '</tr>';
+					}
+				}
+				$(".table-info").append(html);
+                $('.dataTables-example').dataTable(); 
+			},
+            complete: function(){
+                layer.close(loading);
+            }
+		});
+	});
+</script>
+</html>

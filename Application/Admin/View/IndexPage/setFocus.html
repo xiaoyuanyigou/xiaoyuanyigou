@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>设置为轮播图</title>
+	<link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <style>
+		.btn-f{position: relative;overflow: hidden;margin-top:4px;display:inline-block; 
+			*display:inline;padding:4px 10px 4px;font-size:14px;line-height:18px; 
+			*line-height:20px;color:#fff; text-align:center;vertical-align:middle;cursor:pointer;background:#5bb75b; 
+			border:1px solid #cccccc;border-color:#e6e6e6 #e6e6e6 #bfbfbf; 
+			border-bottom-color:#b3b3b3;-webkit-border-radius:4px; 
+			-moz-border-radius:4px;border-radius:4px;} 
+			.btn-f input{position: absolute;top: 0; right: 0;margin: 0;border:solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;} 
+    </style>
+</head>
+<body>
+	<div class="wrapper wrapper-content animated">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        把商品设置到首页
+                    </div>
+                    <div class="panel-body">
+						<div class="form-horizontal">
+	                        <div class="form-group">
+	                            <label class="col-sm-2 control-label">请输入序号</label>
+	                            <div class="col-sm-6">
+	                                <input type="text" id="index" class="form-control"><span class="help-block m-b-none">序号按从左到右从上到下的顺序标号</span>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label class="col-sm-2 control-label">上传已PS好的图片</label>
+	                            <div class="col-sm-6">
+	                            	<div class="col-sm-3">
+	                            		<div class="btn-f" id="uploadForm"> 
+										     <span>选择图片</span> 
+										     <input id="file" type="file" onchange="selectImg()"> 
+										</div>
+										<p><small>图片分辨率请根据实际显示和所需尺寸提前处理</small></p>
+	                            	</div>
+									<div class="col-sm6">
+										<img src="" id="h" alt="">
+									</div>
+	                            </div>
+	                        </div>
+	                         <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" id="confirm">确定</button>
+                                    <button class="btn btn-white">取消</button>
+                                </div>
+                            </div>
+	                    </div>
+					</div>
+				</div>
+		    </div>
+		</div>
+	</div>
+</body>
+<script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+	var proId = GetQueryString("pid");
+	function selectImg(){
+		var formData = new FormData();
+		formData.append('img', $('#file')[0].files[0]);
+		$.ajax({
+			type:'post',
+		    cache:false,
+		    data:formData,
+		    url:"pictrue",
+		    dataType:"json",
+		    async: false,
+          	contentType: false, 
+          	processData: false, 
+		    success:function(data){
+		    	if(data.result==1){
+		    		$("#h").attr("src",data.url);
+		    	}else if(data.result==2){
+		    		alert("非法图片类型，只允许jepg、jpg、png类型！");
+		    	}else if(data.result==3){
+		    		alert("文件大小过大，只允许10M以内的图片上传！");
+		    	}else if(data.result==4){
+		    		alert("不是HTTP POST上传！");
+		    	}else if(data.result==5){
+		    		alert("上传图片非真实图片！");
+		    	}else if(data.result==0){
+		    		alert("上传图片出错！");
+		    	}
+		    }
+		});
+	}
+	$("#confirm").click(function(){
+		var index = $("#index").val();
+		var path = $("#h").attr("src");
+		$.post("setFocusHandle",{pid:proId,index:index,path:path},function(data){
+			if(data.result==1){
+				alert("设置轮播图成功！");
+				//跳转到轮播图列表
+				window.location.href = "focusList";
+			}else if(data.result==2){
+				alert("缺少参数！");
+			}else if(data.result==3){
+				alert("该商品已经在轮播图中！");
+			}else if(data.result==4){
+				alert("请填写轮播图的序号！");
+			}else if(data.result==5){
+				alert("请选择图片！");
+			}else if(data.result==0){
+				alert("出错了！");
+			}
+		},'json'); 
+	});
+</script>
+</html>

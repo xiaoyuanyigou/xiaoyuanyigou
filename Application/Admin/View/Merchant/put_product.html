@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>上架商品</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<link rel="stylesheet" href="__PUBLIC__/css/weui.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mobile-select-area.css">
+	<style>
+		.weui-cells__title{font-size: 1em;}
+		input{font-family: "Microsoft Yahei";}
+	</style>
+</head>
+<body>
+	<div class="weui-cells__title">商品名称</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input class="weui-input" id="pro-name" type="text" placeholder="请输入商品名称" value="这是一件商品，商品名称是这样的"/>
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells__title">规格（第一个为默认规格）<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" style="float:right;position:relative;top:-0.4em">添加规格	</a></div>
+    <div class="weui-cells standard" style="clear:both;">
+	    <div class="weui-cell">
+	        <div class="weui-cell__hd"><label class="weui-label">名称</label></div>
+	        <div class="weui-cell__bd">
+	            <input class="weui-input s-name" type="text" placeholder="请输入规格名称" value="第一件商品"/>
+	        </div>
+	    </div>
+	    <div class="weui-cell">
+	        <div class="weui-cell__hd"><label class="weui-label">库存</label></div>
+	        <div class="weui-cell__bd">
+	            <input class="weui-input inventory" type="number" placeholder="请输入库存" value="100"/>
+	        </div>
+	    </div>
+	    <div class="weui-cell">
+	        <div class="weui-cell__hd"><label class="weui-label">原价</label></div>
+	        <div class="weui-cell__bd">
+	            <input class="weui-input o-price" type="number" placeholder="请输入原价" value="10.00"/>
+	        </div>
+	    </div>
+	    <div class="weui-cell">
+	        <div class="weui-cell__hd"><label class="weui-label">售价</label></div>
+	        <div class="weui-cell__bd">
+	            <input class="weui-input s-price" type="number" placeholder="请输入售价" value="9.99"/>
+	        </div>
+	    </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">参与活动</label></div>
+            <div class="weui-cell__bd">
+                <div class="weui-cells weui-cells_checkbox" style="margin-top:0em">
+                    <label class="weui-cell weui-check__label" for="s111">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" checked="checked" class="weui-check" name="checkbox" id="s111" value="1"/>
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>全场九折</p>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="s122">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" name="checkbox" checked="checked" class="weui-check" id="s122" value="3"/>
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>满200减10</p>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="s123">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" name="checkbox" class="weui-check" id="s123" value="2"/>
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>满200打九折</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+	</div>
+	<div class="weui-cells standard" style="clear:both;">
+	    <div class="weui-cell">
+	        <div class="weui-cell__hd"><label class="weui-label">名称</label></div>
+	        <div class="weui-cell__bd">
+	            <input class="weui-input s-name" type="text" placeholder="请输入规格名称" value="第二件商品"/>
+	        </div>
+	    </div>
+	    <div class="weui-cell">
+	        <div class="weui-cell__hd"><label class="weui-label">库存</label></div>
+	        <div class="weui-cell__bd">
+	            <input class="weui-input inventory" type="number" pattern="[0-9]*" placeholder="请输入库存" value="200"/>
+	        </div>
+	    </div>
+	    <div class="weui-cell">
+	        <div class="weui-cell__hd"><label class="weui-label">原价</label></div>
+	        <div class="weui-cell__bd">
+	            <input class="weui-input o-price" type="number" pattern="[0-9]*" placeholder="请输入原价" value="20.00"/>
+	        </div>
+	    </div>
+	     <div class="weui-cell">
+	        <div class="weui-cell__hd"><label class="weui-label">售价</label></div>
+	        <div class="weui-cell__bd">
+	            <input class="weui-input s-price" type="number" pattern="[0-9]*" placeholder="请输入售价" value="19.99"/>
+	        </div>
+	    </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">参与活动</label></div>
+            <div class="weui-cell__bd">
+                <div class="weui-cells weui-cells_checkbox" style="margin-top:0em">
+                    <label class="weui-cell weui-check__label" for="s211">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" class="weui-check" name="checkbox" id="s211" value="1"/>
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>全场九折</p>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="s222">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" name="checkbox" checked="checked" class="weui-check" id="s222" value="3"/>
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>满200减10</p>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="s223">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" name="checkbox" checked="checked" class="weui-check" id="s223" value="2"/>
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>满200打9折</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+	</div>
+
+	<div class="weui-cells__title">请选择分类</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input class="weui-input" id="sort" type="text" placeholder="请选择分类">
+            </div>
+        </div>
+    </div>
+
+	<div class="page__bd">
+        <div class="weui-gallery" id="focus_gallery">
+            <span class="weui-gallery__img" id="focus_galleryImg"></span>
+            <div class="weui-gallery__opr">
+                <a href="javascript:" class="weui-gallery__del">
+                    <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                </a>
+            </div>
+        </div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <div class="weui-uploader">
+                        <div class="weui-uploader__hd">
+                            <p class="weui-uploader__title">商品轮播图片上传</p>
+                            <!-- <div class="weui-uploader__info">0/2</div> -->
+                        </div>
+                        <div class="weui-uploader__bd">
+                            <ul class="weui-uploader__files" id="focus_uploaderFiles">
+                                
+                            </ul>
+                            <div class="weui-uploader__input-box">
+                                <input id="focus_uploaderInput" class="weui-uploader__input" type="file" accept="image/jpg,image/jpeg,image/png" multiple/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+	<div class="page__bd">
+        <div class="weui-gallery" id="describe_gallery">
+            <span class="weui-gallery__img" id="describe_galleryImg"></span>
+            <div class="weui-gallery__opr">
+                <a href="javascript:" class="weui-gallery__del">
+                    <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                </a>
+            </div>
+        </div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <div class="weui-uploader">
+                        <div class="weui-uploader__hd">
+                            <p class="weui-uploader__title">商品描述图片上传</p>
+                            <!-- <div class="weui-uploader__info">0/2</div> -->
+                        </div>
+                        <div class="weui-uploader__bd">
+                            <ul class="weui-uploader__files" id="describe_uploaderFiles">
+                                 <!-- <li class="weui-uploader__file" style="background-image:url(./images/pic_160.png)"></li> -->
+                            </ul>
+                            <div class="weui-uploader__input-box">
+                                <input id="describe_uploaderInput" class="weui-uploader__input" type="file" accept="image/jpg,image/jpeg,image/png" multiple/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="weui-btn-area page__bd page__bd_spacing" >
+		<a href="javascript:;" class="weui-btn weui-btn_primary" onclick="uploadProductInfo()">
+            提交
+		</a>
+	</div>
+</body>
+<script src="__PUBLIC__/js/jquery-1.12.0.min.js"></script>
+<!-- <script src="__PUBLIC__/js/zepto.min.js"></script> -->
+<script src="__PUBLIC__/js/dialog.js"></script>
+<script src="__PUBLIC__/js/mobile-select-area.js"></script>
+<script>
+    $(function(){
+        var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
+        /*轮播图的图片选择插件样式*/
+        $focus_gallery = $("#focus_gallery"), $focus_galleryImg = $("#focus_galleryImg"),
+        $focus_uploaderInput = $("#focus_uploaderInput"),
+        $focus_uploaderFiles = $("#focus_uploaderFiles");
+        $focus_uploaderInput.on("change", function(e){
+            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+            for (var i = 0, len = files.length; i < len; ++i) {
+                var file = files[i];
+                if (url) {
+                    src = url.createObjectURL(file);
+                } else {
+                    src = e.target.result;
+                }
+
+                $focus_uploaderFiles.append($(tmpl.replace('#url#', src)));
+            }
+        });
+        $focus_uploaderFiles.on("click", "li", function(){
+            $focus_galleryImg.attr("style", this.getAttribute("style"));
+            $focus_gallery.fadeIn(100);
+        });
+        $focus_gallery.on("click", function(){
+            $focus_gallery.fadeOut(100);
+        });
+
+        /*描述图的图片选择插件样式*/
+        $describe_gallery = $("#describe_gallery"), $describe_galleryImg = $("#describe_galleryImg"),
+        $describe_uploaderInput = $("#describe_uploaderInput"),
+        $describe_uploaderFiles = $("#describe_uploaderFiles");
+
+        $describe_uploaderInput.on("change", function(e){
+            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+            for (var i = 0, len = files.length; i < len; ++i) {
+                var file = files[i];
+                if (url) {
+                    src = url.createObjectURL(file);
+                } else {
+                    src = e.target.result;
+                }
+
+                $describe_uploaderFiles.append($(tmpl.replace('#url#', src)));
+            }
+        });
+        $describe_uploaderFiles.on("click", "li", function(){
+            $describe_galleryImg.attr("style", this.getAttribute("style"));
+            $describe_gallery.fadeIn(100);
+        });
+        $describe_gallery.on("click", function(){
+            $describe_gallery.fadeOut(100);
+        });
+
+        /*请求所有的分类，将结果转换为json格式，给插件使用*/
+        $.post("../Product/sortDispose",{},function(data){
+            if(data.result==1){
+               var selectArea2 = new MobileSelectArea();
+        selectArea2.init({trigger:'#sort',value:$('#sort').data('value'),data:data.data,eventName:'click'});
+            }else{
+                 alert("请求分类错误！");
+            }
+            
+        },'json');
+    });
+    
+    /*
+    * 上传商品信息
+    *
+    */
+    function uploadProductInfo(){
+        var formData = new FormData();
+        /*1、商品图片*/
+        var proName = $("#pro-name").val();
+        if(proName==""){
+            alert("请输入商品名称！");
+            return false;
+        }
+        formData.append("proName",proName);
+        /*2、商品规格*/
+        var sArray = '[';
+        var standard = $(".standard");
+        for(var i=0;i<standard.length;i++){
+            var sName = standard.eq(i).find(".s-name").val();
+            var inventory = standard.eq(i).find(".inventory").val();
+            var oPrice = standard.eq(i).find(".o-price").val();
+            var sPrice = standard.eq(i).find(".s-price").val();
+            //选择规格支持的活动
+            var check = standard.eq(i).find('input:checkbox[name=checkbox]:checked');
+            var activities = "";
+            if(check.length>0){
+                for(var j=0;j<check.length;j++){
+                    if(j==(check.length-1)){
+                        activities += check.eq(j).val();
+                    }else{
+                        activities += check.eq(j).val()+",";
+                    }
+                }
+            }
+            if(sName==""){
+                alert("请输入规格的名称！");
+                return false;
+            }else if(inventory==""){
+                alert("请输入规格的库存！");
+                return false;
+            }else if(oPrice==""){
+                alert("请输入规格的原价！");
+                return false;
+            }else if(sPrice==""){
+                alert("请输入规格的售价！");
+                return false;
+            }else if(!isNumber(inventory)||!isNumber(oPrice)||!isNumber(sPrice)){
+                alert("库存、原价、售价必须为数字！");
+                return false;
+            }else if(parseFloat(oPrice)<parseFloat(sPrice)){
+                alert("原价必须大于售价！");
+                return false;
+            }
+            var temp = '{"sName":"'+sName+'","inventory":"'+inventory+'","oPrice":"'+oPrice+'","sPrice":"'+sPrice+'","activity":"'+activities+'"}';
+            if(i==(standard.length-1)){
+                sArray += temp;
+            }else{
+                sArray += temp+',';
+            }
+        }
+        sArray += ']';
+        formData.append("standard",sArray);
+        /*3、商品分类*/
+        var sort = $("#sort").attr("data-value");
+        if(sort==undefined){
+            alert("请选择商品所属分类！");
+            return false;
+        }
+        formData.append("sort",sort);
+        //1、轮播图图片的多个文件加入到formData中
+        var focus = $("#focus_uploaderInput")[0].files;
+        if(focus.length==0){
+            alert("请选择商品轮播图片！");
+            return false;
+        }
+        for(var i=0;i<focus.length;i++){
+            formData.append("foucs[]",focus[i]);
+        }
+        //2、将描述图片的多个文件加入到formData中
+        var describe = $("#describe_uploaderInput")[0].files;
+        if(describe.length==0){
+            alert("请选择商品描述图片！");
+            return false;
+        }
+        for(var j=0;j<describe.length;j++){
+            formData.append("describe[]",describe[j]);
+        }
+        /*4、提交商品信息*/
+        $.ajax({
+            type:'post',
+            cache:false,
+            data:formData,
+            url:"../Product/putProduct",
+            dataType:"json",
+            async: false,
+            contentType: false, 
+            processData: false, 
+            beforeSend:function(){
+                var before = '<div id="loadingToast">'+
+                                '<div class="weui-mask_transparent"></div>'+
+                                '<div class="weui-toast">'+
+                                    '<i class="weui-loading weui-icon_toast"></i>'+
+                                    '<p class="weui-toast__content">信息提交中</p>'+
+                                '</div>'+
+                            '</div>';
+                $('body').append(before);
+            },
+            success:function(data){
+                if(data.result==1){
+                    alert("商品上架成功！");
+                }else if(data.result==2){
+                    alert("缺少参数！");
+                }else if(data.result==3){
+                    alert("请选择商品所属分类！");
+                }else if(data.result==4){
+                    alert("图片上传出错！");
+                }else if(data.result==5){
+                    alert("上传图片中包含非法后缀名！");
+                }else if(data.result==6){
+                    alert("文件大小超过最大大小10M！");
+                }else if(data.result==7){
+                    alert("图片不是通过HTTP POST上传的");
+                }else if(data.result==8){
+                    alert("上传文件中包含非真实图片！");
+                }else if(data.result==9){
+                    alert("临时文件移动错误！");
+                }else if(data.result=='A'){
+                    alert("请选择完整的分类！");
+                }else{
+                    alert("出错了！");
+                }
+            },
+            complete: function() {
+                $("#loadingToast").remove();
+            }
+        });
+        /*//3、将数据传到后台
+        $.ajax({
+            type:'post',
+            cache:false,
+            data:formData,
+            url:"../Product/putProduct",
+            dataType:"json",
+            async: false,
+            contentType: false, 
+            processData: false, 
+            success:function(data){
+
+            }
+        });*/
+    }
+    function isNumber(number){
+        var pat = /^(\d+(\.\d+)?)|(\d+)$/;
+        return pat.test(number);
+    }
+</script>
+</html>

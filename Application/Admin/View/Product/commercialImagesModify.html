@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>智谷科技后台管理框架 - WPP - 基本表单</title>
+    <meta name="keywords" content="WPP,后台HTML,响应式后台">
+    <meta name="description" content="WPP是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+
+	
+	<link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+	<link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+	
+    <link rel="stylesheet" href="__PUBLIC__/admin_css/plugins/iCheck/custom.css" >
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin_css/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin_css/demo/webuploader-demo.css">
+
+    <link href="__PUBLIC__/admin_css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+	<style>
+       .lightBoxGallery{overflow: hidden;}
+        .lightBoxGallery img {
+            margin: 15px;
+            width: 180px;
+            height: 120px;
+        }
+        .img-calcle{width:20px;height:20px;border-radius:50%;position:absolute;text-align: center;cursor: pointer;background:gray;right:8px;top:8px;}
+        .img-calcle p{font-size: 15px;color:white;}
+       
+    </style>
+</head>
+
+<body class="gray-bg" onload="loadImages()">
+    <div class="wrapper wrapper-content animated fadeInRight">
+		<div class="form-horizontal">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+							<h5>修改商品描述图片 </h5>
+							<div class="ibox-tools">
+								<a class="collapse-link">
+									<i class="fa fa-chevron-up"></i>
+								</a>
+								<a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+									<i class="fa fa-wrench"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-user">
+									<li><a href="form_basic.html#">选项1</a>
+									</li>
+									<li><a href="form_basic.html#">选项2</a>
+									</li>
+								</ul>
+								<a class="close-link">
+									<i class="fa fa-times"></i>
+								</a>
+							</div>
+						</div>	
+						
+						<div class="ibox-content">
+
+								<!--修改上传图片部分-->
+								<div class="col-sm-12">
+									<h4 class="col-sm-offset-1">已存在的商品描述图片</h4>
+								</div>
+								<div class="col-sm-11 col-sm-offset-1">
+									<div class="lightBoxGallery">
+										<!-- 循环显示图片 -->
+									</div>
+								</div>
+
+								<div class="col-sm-12">							
+									<div class="ibox-content">
+										<div class="page-container">
+											
+											<div id="uploader" class="wu-example">
+												<div class="queueList">
+													<div id="dndArea" class="placeholder">
+														<div id="filePicker"></div>
+														<p>或将图片拖拽到此处</p>
+													</div>
+												</div>
+												<div class="statusBar" style="display:none;">
+													<div class="progress">
+														<span class="text">0%</span>
+														<span class="percentage"></span>
+													</div>
+													<div class="info"></div>
+													<div class="btns">
+														<div id="filePicker2"></div>
+														<div class="uploadBtn">开始上传</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>								
+								<div class="form-group">
+									<div class="col-sm-10 col-sm-offset-5">
+										<button class="btn btn-primary"  style="margin-left:20px" onclick="modifyImage()">确定</button>
+										<button class="btn btn-white" onclick="backTo()">取消</button>
+									</div>
+								</div>
+										 
+						</div>
+					</div>
+				</div>
+			</div>
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/admin_js/content.js?v=1.0.0"></script>
+
+    <!-- iCheck -->
+    <script src="__PUBLIC__/admin_js/plugins/iCheck/icheck.min.js"></script>
+	
+    <!-- Web Uploader -->
+    <script type="text/javascript">
+        // 添加全局站点信息
+        var BASE_URL = '__PUBLIC__/admin_js/plugins/webuploader';
+    </script>
+	
+    <script src="__PUBLIC__/admin_js/plugins/webuploader/webuploader.min.js"></script>
+
+    <script src="__PUBLIC__/admin_js/demo/webuploader-demo1.js"></script>
+
+    <!-- blueimp gallery -->
+    <script src="__PUBLIC__/admin_js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+	
+ <script type="text/javascript">
+ /*-------------------------------------------------------------------------------------------*/
+ 	var deleteImageArray =new Array();
+ 	var deleteImage = 0;
+/*-------------------------------------------------------------------------------------------*/
+
+ 		/*加载商品描述图片*/
+ 	function loadImages (){
+ 		var id = getParam('proId');
+ 		$.ajax({
+            type:"post",
+            cache:false,
+            data:{"proId":id},
+            url:"checkImages",
+            dataType:"json",
+          	success:function(data){                
+	            var obj = JSON.parse(data); 
+	            
+	            if(2==obj.result)
+	                alert("缺少条件");
+	            else if(0==obj.result)
+	                alert("查询失败");
+	            else
+	            {	
+	            	var htmlImg = '';       //循环输出图片
+	        	    for(var i=0;i<obj.data.length;i++){
+	                    htmlImg +=
+	                   '<div style="float:left;position:relative;" id="img-wrap" >'+
+	        				'<input type="hidden" id="imageId" value="'+obj.data[i].img_id+'">'+
+	        				'<img src="'+obj.data[i].img_path+'" class="img-rounded">'+
+	                     	'<div class="img-calcle" onclick="removeImg(this,'+obj.data[i].img_id+')"><p>×</p></div>'+
+	                     '</div>';      
+    				}//end for
+	            	$(".lightBoxGallery").append(htmlImg); 	
+	            }//end else
+	        }//end success
+   		})
+ 	}
+
+
+/*-------------------------------------------------------------------------------------------*/
+	$(document).ready(function () {
+ 		var id = getParam('proId');
+      	if(id==null){
+			alert("非法操作");
+			window.location.href="commercialList";//定向到首页	
+		}	
+		
+    });
+
+ 	/*移除原有图片*/
+	function removeImg(event,id){
+		if(confirm("确定删除？")){
+			deleteImageArray.push(id);
+			$(event).parent("#img-wrap").remove();
+			deleteImage++;
+		}	
+		
+	}
+
+/*-------------------------------------------------------------------------------------------*/
+
+ 	/*跳转到商品详情页面*/
+	function modifyImage(){
+		if(deleteImageArray.length==0){
+		//没有删除图片么
+			var id = getParam('proId');
+			window.location.href = "commercialInfo?proId=" +id;  //跳转商品详情	
+		}//end if
+		else{
+			$.ajax({
+			type:"post",
+		    cache:false,
+		    data:{
+		    		"deleteImage":deleteImageArray
+		    	},
+		    url:"alertImagesInfo",
+		    dataType:"json",
+		    success:function(data){
+		    	var obj = JSON.parse(data); 
+		    	if(2==obj.result){
+		    		alert("缺少条件");
+		    	}
+		    	else if(0==obj.result){
+		    		alert("修改失败，请重新操作！");
+		    	}else{
+		    		var id = getParam('proId');
+					window.location.href = "commercialInfo?proId=" +id;  //跳转商品详情	
+		    	}//end else
+				
+			}//end success
+		})	
+		}//end else
+		
+	}
+
+		/*取消按鈕*/
+	function backTo(){
+
+		window.history.back();//上级页面 
+	}
+/*-------------------------------------------------------------------------------------------*/	
+ 	
+ 		/*获取url里面的参数*/
+ 	function getParam(paramName) { 
+	    paramValue = "", isFound = !1; 
+	    if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) { 
+	        arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0; 
+	        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++ 
+	    } 
+		return paramValue == "" && (paramValue = null), paramValue 
+	} 
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>智谷科技后台管理框架 - WPP - 基本表单</title>
+    <meta name="keywords" content="WPP,后台HTML,响应式后台">
+    <meta name="description" content="WPP是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+	
+	<link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+	<link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+	
+    <link rel="stylesheet" href="__PUBLIC__/admin_css/plugins/iCheck/custom.css" >
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin_css/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin_css/demo/webuploader-demo.css">
+</head>
+
+<body class="gray-bg" onload="loadFirstSort()">
+    <div class="wrapper wrapper-content animated fadeInRight">
+		<div class="form-horizontal">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+							<h5>上架商品 </h5>
+							<div class="ibox-tools">
+								<a class="collapse-link">
+									<i class="fa fa-chevron-up"></i>
+								</a>
+								<a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+									<i class="fa fa-wrench"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-user">
+									<li><a href="form_basic.html#">选项1</a>
+									</li>
+									<li><a href="form_basic.html#">选项2</a>
+									</li>
+								</ul>
+								<a class="close-link">
+									<i class="fa fa-times"></i>
+								</a>
+							</div>
+						</div>
+						
+						<div class="ibox-content">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">商品名称</label>
+									<div class="col-sm-6">
+										<input type="text" class="form-control" name="infoName">
+									</div>
+								</div>
+								<div class="hr-line-dashed"></div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 control-label">是否推荐到首页</label>
+									<div class="col-sm-2">
+
+										<div class="radio i-checks">
+	                                        <label>
+	                                            <input type="radio" name="focus"  value="2">是</label>
+	                                    </div>
+	                                    <div class="radio i-checks">
+	                                        <label>
+	                                            <input type="radio" checked="" name="focus" value="1"  > <i></i> 否</label>
+	                                    </div>
+										
+									</div>
+								</div>	
+								<div class="hr-line-dashed"></div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label">规格设置</label>
+									<button class="btn btn-primary" style="margin-left: 20px" onclick="addStandard()">添加规格</button>
+									<label class="control-label">(第一个为默认，必填）</label>
+								</div>
+								<div class="hr-line-dashed"></div>
+
+								
+
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-offset-1 control-label">名称</label>
+									<label class="col-sm-2 control-label">数量</label>
+									<label class="col-sm-2 control-label">原价</label>
+									<label class="col-sm-2 control-label">现价</label>			
+								</div>
+								
+								<div class="form-group" id="standard-list">
+									<!--规格内容显示-->
+									
+								</div>
+								<div class="hr-line-dashed"></div>		
+
+								
+								<div class="form-group">
+									<label class="col-sm-2 control-label">分类选择</label>
+
+									<div class="col-sm-2">
+										<select class="form-control m-b" name="account" id="tr-first" onchange="loadChildrenSort1(this)">
+                                        <option value="-1">请选择一级分类</option>
+                                    	</select>
+									</div>
+									
+									<div class="col-sm-2">
+										 <select class="form-control m-b" name="account" id="second" id="tr-second" onchange="loadChildrenSort2(this)">
+                                        <option value="-1">请选择二级分类</option>
+                                    	</select>
+									</div>
+									
+									<div class="col-sm-2">
+									 	<select class="form-control m-b" name="account" id="third" id="tr-third" >
+                                       <option value="-1">请选择三级分类</option>
+                                   		</select>
+									</div>
+									
+								</div>
+								
+								<div class="col-sm-12">						
+									<div class="ibox-content">
+										<h4>上传商品图片（第一张为默认）</h4>	
+										<div class="page-container">
+											<div id="uploader" class="wu-example">
+												<div class="queueList">
+													<div id="dndArea" class="placeholder">
+														<div id="filePicker"></div>
+														<p>或将图片拖拽到此处</p>
+													</div>
+												</div>
+												<div class="statusBar" style="display:none;">
+													<div class="progress">
+														<span class="text">0%</span>
+														<span class="percentage"></span>
+													</div>
+													<div class="info"></div>
+													<div class="btns">
+														<div id="filePicker2"></div>
+														<div class="uploadBtn">开始上传</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>								
+								<div class="form-group">
+									<div class="col-sm-12 col-sm-offset-5">
+										<button class="btn btn-primary" onclick="addInfo()">确定添加</button>
+										<button class="btn btn-white" onclick="backTo()">取消</button>
+									</div>
+								</div>
+								<div class="hr-line-dashed"></div>		 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+    </div>
+
+   
+ <script type="text/javascript">
+ 	var countStandard=0;		//用来记录有多少个规格	
+	function addInfo(){
+		//获取--商品名称,第三级分类id，推荐
+		var focus = $("input[name='focus']:checked").val();
+		var sortId = $("#third option:selected").val();
+		var proName = $("input[name='infoName']").val();
+		//获取动态添加出来额所有规格信息，存储在数组中
+		var proStandard = new Array();
+		var standardName = new Array();
+		var standardNum = new Array();
+		var standardOPrice = new Array();
+		var standardCPrice = new Array();
+		for(var i=0;i<countStandard;i++){
+		//循环将规格信息，每一个字段分别存储在一个数组中
+			if($("input[name='standardName']")[i].value==''){
+				alert("规格名称不能为空");return false;
+			}
+			else
+				standardName.push($("input[name='standardName']")[i].value);
+
+			if($("input[name='standardNum']")[i].value==''){
+				alert("库存不能为空");return false;
+			}else if(!checkRateI($("input[name='standardNum']")[i].value)){
+				alert("库存必须是一个整数");return false;
+			}else
+				standardNum.push($("input[name='standardNum']")[i].value);
+
+		
+
+
+			if($("input[name='standardOPrice']")[i].value==''){
+				alert("规格原价不能为空");return false;
+			}else if(!checkRateF($("input[name='standardOPrice']")[i].value)){
+				alert("规格原价必须是数字");return false;
+			}
+			else if($("input[name='standardCPrice']")[i].value==''){
+				alert("规格现价不能为空");return false;
+			}else if(!checkRateF($("input[name='standardCPrice']")[i].value)){
+				alert("规格现价必须是数字");return false;
+			}else {
+				var cPrice = parseFloat($("input[name='standardCPrice']")[i].value);
+				var oPrice = parseFloat($("input[name='standardOPrice']")[i].value);
+				if(oPrice<cPrice){
+					alert("规格原价不能低于现价");return false;
+				}else{
+					standardOPrice.push(oPrice);
+					standardCPrice.push(cPrice);
+				}//end else
+			}//end else 
+				
+		}//end for
+
+		//将所有信息根据字段，拼装成prostandard数组。
+		proStandard.push(standardName,standardNum,standardOPrice,standardCPrice);
+
+		if(0==countStandard){
+			alert("规格尚未填写");return false;
+		}else if(sortId==-1){
+			alert("分类尚未填写");return false;
+		}else if(proName==''){
+			alert("商品名称尚未填写");return false;
+		}
+		else{
+			$.ajax({
+				type:"post",
+	            cache:false,
+	            data:{
+	            	"proName":proName,
+            		"sortId":sortId,
+            		"focus":focus,
+            		"proStandard":proStandard
+            	},
+	            url:"addProduct",
+	            dataType:"json",
+
+	            success:function(data){
+	            	var obj = JSON.parse(data); 
+	            	//var obj = eval("("+data+")");
+	            	if(2==obj.result){
+	            		alert("缺少条件");
+	            	}
+	            	else if(0==obj.result){
+	            		alert("添加失败，请重新操作！");
+	            	}
+	            	else if(3==obj.result){
+						alert("商品没有默认图片");
+					}
+					else if(1==obj.result){
+	            		if(confirm("继续添加商品描述图片!"))
+	            			window.location.href = "commercialImagesAdd?proId=" + obj.data;
+	            		else
+	            			window.location.href = "commercialInfo?proId=" + obj.data;
+	            	}//end else
+        		},
+	            error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(textStatus); // parser error;
+				},
+			})	
+		}//end else
+	}
+
+/*-------------------------------------------------------------------------------------------*/
+		/*分类的动态加载*/
+	function loadFirstSort(){
+        $.post("../Sort/getFirstSort",{},function(data){
+            var obj = eval("("+data+")");
+            if(obj.result==0){
+                alert("出错了！");
+                return false;
+            }
+            var html = "";
+            for(var i=0;i<(obj.data).length;i++){
+                html += "<option value='"+(obj.data[i]).id+"'>"+(obj.data[i]).sort_name+"</option>";
+            }
+            $("#tr-first").append(html);
+            //$("#tw-first").append(html);
+        },'json');
+        $.post("deleteImages");	//删除掉数据库中非法数据（status=-2）
+	}
+    function loadChildrenSort1(event){
+    	$("#second option").remove();
+    	$("#second").append("<option value='-1'>请选择二级分类</option>");
+    	$("#third option").remove();
+    	$("#third").append("<option value='-1'>请选择三级分类</option>");
+        var pid = $(event).find("option:selected").val();
+        $.post("../Sort/getChildrenSort",{parentId:pid},function(data){
+            var obj = eval("("+data+")");
+            if(obj.result==2||obj.result==0){
+                alert("出错了！");
+                return;
+            }
+            if(obj.result==1){
+                if(obj.data=="null"||obj.data==""){
+                    $("#second option").remove();
+                    $("#second").append("<option value='-1'>请选择二级分类</option>");
+                }else{
+                    var html = "";
+                    for(var i=0;i<(obj.data).length;i++){
+                        html += "<option value='"+(obj.data[i]).id+"'>"+(obj.data[i]).sort_name+"</option>";
+                    }
+                    //$("#second option").remove();
+                    $("#second").append(html);
+                }
+            }
+
+        },'json');
+    }
+    function loadChildrenSort2(event){
+    	$("#third option").remove();
+    	$("#third").append("<option value='-1'>请选择三级分类</option>");
+        var pid = $(event).find("option:selected").val();
+        $.post("../Sort/getChildrenSort",{parentId:pid},function(data){
+            var obj = eval("("+data+")");
+            if(obj.result==2||obj.result==0){
+                alert("出错了！");
+                return;
+            }
+            if(obj.result==1){
+                if(obj.data=="null"||obj.data==""){
+                    $("#third option").remove();
+                    $("#third").append("<option value='-1'>请选择三级分类</option>");
+                }else{
+                    var html = "";
+                    for(var i=0;i<(obj.data).length;i++){
+                        html += "<option value='"+(obj.data[i]).id+"'>"+(obj.data[i]).sort_name+"</option>";
+                    }
+                    //$("#third option").remove();
+                    $("#third").append(html);
+                }
+            }
+        },'json');
+    }
+/*-------------------------------------------------------------------------------------------*/
+		/*移除新增规格*/
+    function removeStandard(event){
+		var div = $(event).parent('.col-sm-2').parent(".form-group").parent(".addition-standard");
+		div.remove();
+		countStandard--;
+	}
+
+		/*新增规格*/
+	function addStandard(){
+		countStandard++;
+		var html  = 
+			'<div class="addition-standard">'+
+				'<div class="form-group">'+
+					'<div class="col-sm-2 col-sm-offset-2">'+
+						'<input type="text" class="form-control" name="standardName">'+
+					'</div>'+
+					'<div class="col-sm-2">'+
+						'<input type="text" class="form-control" name="standardNum">'+
+					'</div>'+
+					
+					'<div class="col-sm-2">'+
+						'<div class="input-group m-b"><span class="input-group-addon">&yen;</span>'+
+							'<input type="text" class="form-control"  name="standardOPrice">'+
+							'<span class="input-group-addon">.00</span>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-sm-2">'+
+						'<div class="input-group m-b"><span class="input-group-addon">&yen;</span>'+
+							'<input type="text" class="form-control" name="standardCPrice">'+
+							'<span class="input-group-addon">.00</span>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-sm-2 ">'+
+						'<button class="btn btn-warning" onclick="removeStandard(this)">删除</button>'+
+					'</div>'+
+				'</div>'+
+			'</div>';
+		$("#standard-list").append(html);
+	}
+/*-------------------------------------------------------------------------------------------*/
+		/*判断是否是正整数*/
+	function checkRateI(input){
+	    var re = /^[1-9]+[0-9]*]*$/;
+	    if (!re.test(input)){   
+	        return false;  
+	    }//end if  
+	    return true;
+	} 
+
+		/*判读是否是数字*/
+	function checkRateF(input) {
+     	var re = /^[0-9]+.?[0-9]*$/;         
+     	if (!re.test(input)){  
+        	return false;  
+     	}//end if  
+     	return true;
+	}
+
+	function clearVariable(){
+
+	}
+/*-------------------------------------------------------------------------------------------*/
+
+		/*取消按鈕*/
+	function backTo(){
+
+		window.history.back();//上级页面 
+	}
+	</script>
+
+	 <!-- 全局js -->
+    <script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/admin_js/content.js?v=1.0.0"></script>
+
+    <!-- iCheck -->
+    <script src="__PUBLIC__/admin_js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+	
+    <!-- Web Uploader -->
+    <script type="text/javascript">
+        // 添加全局站点信息
+        var BASE_URL = '__PUBLIC__/admin_js/plugins/webuploader';
+    </script>
+	
+    <script src="__PUBLIC__/admin_js/plugins/webuploader/webuploader.min.js"></script>
+
+    <script src="__PUBLIC__/admin_js/demo/webuploader-demo.js"></script>
+</body>
+
+</html>

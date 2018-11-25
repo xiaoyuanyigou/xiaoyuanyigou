@@ -1,0 +1,26 @@
+/*
+* @Author: Marte
+* @Date:   2017-08-03 17:22:23
+* @Last Modified by:   Marte
+* @Last Modified time: 2017-08-03 17:31:46
+*/
+.container, .page {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.container {
+    overflow: hidden;
+}
+.page.msg, .page.msg_success, .page.msg_warn, .page.toast {
+    background-color: #fff;
+}
+.page.js_show {
+    opacity: 1;
+}
+.weui-msg {
+    padding-top: 36px;
+    text-align: center;
+}

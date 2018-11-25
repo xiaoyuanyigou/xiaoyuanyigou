@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页标题模块商品列表</title>
+	<link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+    <style>
+		img{width: 150px;height: 80px;}
+    </style>
+</head>
+<body>
+	<div class="wrapper wrapper-content animated">
+		<div class="panel panel-primary">
+	        <div class="panel-heading">
+	            首页标题模块商品列表
+	        </div>
+	        <div class="panel-body">
+				<div class="tabs-container">
+                    <div class="panel-body">
+						<div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>标题模块商品图片</th>
+                                        <th>位置序号</th>
+                                        <th>商品名称</th>
+                                        <th>所属店铺</th>
+                                        <th>所属分类</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</body>
+<!-- 全局js -->
+<script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+	var tmid = GetQueryString("tmid");
+	$(function(){
+		$.ajax({
+			type:'post',
+			cache:false,
+			data:{tmid:tmid},
+			url:"titleModuleListHandle",
+			dataType:"json",
+			success:function(data){
+				if(data.result==1){
+					var html = '';
+					for(var i=0;i<data.data.length;i++){
+						html += '<tr>'+
+                                    '<td><img src="'+data.data[i].img_path+'" alt="" /></td>'+
+                                    '<td>'+data.data[i].index+'</td>'+
+                                    '<td width="250px">'+data.data[i].name+'</td>'+
+                                    '<td>'+data.data[i].shop_name+'</td>'+
+                                    '<td>'+data.data[i].sort_name+'</td>'+
+                                    '<td>'+
+                                        '<a href="javascript:deleteTitleModuleProduct('+data.data[i].id+','+tmid+')" class="btn btn-outline btn-danger">从首页删除该商品</a>'+
+                                    '</td>'+
+                                '</tr>';
+					}
+					$("#table").append(html);
+				}else if(data.result==3){
+					alert("标题模块商品为空！");
+				}else{
+					alert("出错了！");
+				}
+			}
+		});
+	});
+	function deleteTitleModuleProduct(id,tmid){
+		if(!confirm("确定要从首页商品模块删除该商品吗？")){
+			return false;
+		}
+		$.post("titleModuleDelete",{tmpid:id,tmid:tmid},function(data){
+			if(data.result==1){
+				alert("删除成功！");
+				window.location.reload();
+			}else if(data.result==2){
+				alert("缺少参数！");
+			}else if(data.result==4){
+				alert("数据库记录过少，不能删除，否则首页显示有问题！");
+			}else{
+				alert("出错了！");
+			}
+		},'json');
+	}
+</script>
+</html>

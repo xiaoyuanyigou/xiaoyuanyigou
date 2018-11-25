@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页分类模块列表</title>
+	<link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+    <style>
+		img{width: 80px;height: 80px;}
+    </style>
+</head>
+<body>
+	<div class="wrapper wrapper-content animated">
+		<div class="panel panel-primary">
+	        <div class="panel-heading">
+	            首页分类模块列表
+	        </div>
+	        <div class="panel-body">
+				<div class="tabs-container">
+                    <div class="panel-body">
+						<div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>模块图标</th>
+                                        <th>模块序号</th>
+                                        <th>模块名称</th>
+                                        <th>二级分类名称</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</body>
+<!-- 全局js -->
+<script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+<script>
+	$(function(){
+		$.ajax({
+			type:'post',
+			cache:false,
+			data:{},
+			url:"sortModuleListHandel",
+			dataType:"json",
+			success:function(data){
+				if(data.result==1){
+					var html = '';
+					for(var i=0;i<data.data.length;i++){
+						html += '<tr>'+
+                                    '<td><img src="'+data.data[i].img_path+'" alt="" /></td>'+
+                                    '<td>'+data.data[i].index+'</td>'+
+                                    '<td>'+data.data[i].module_name+'</td>'+
+                                    '<td>'+data.data[i].sort_name+'</td>'+
+                                    '<td>'+
+                                        '<a href="javascript:deleteSortModule('+data.data[i].id+')" class="btn btn-outline btn-danger">删除该模块</a>'+
+                                    '</td>'+
+                                '</tr>';
+					}
+					$("#table").append(html);
+				}else if(data.result==3){
+					alert("分类模块为空！");
+				}else{
+					alert("出错了！");
+				}
+			}
+		});
+	});
+	function deleteSortModule(id){
+		if(!confirm("确定要删除该模块吗？")){
+			return false;
+		}
+		$.post("deleteSortModule",{sid:id},function(data){
+			if(data.result==1){
+				alert("删除成功！");
+				window.location.reload();
+			}else if(data.result==2){
+				alert("缺少参数！");
+			}else if(data.result==4){
+				alert("数据库中记录小于5个，不能再删除！");
+			}else{
+				alert("出错了！");
+			}
+		},'json');
+	}
+</script>
+</html>

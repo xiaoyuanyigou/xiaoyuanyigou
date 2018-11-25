@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单管理</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+    <style>
+        .logo{width:50px;height:50px;float:left;}
+        .logo img{width:100%;height:100%;}
+        .name{float:left;height:50px;}
+        .name p{line-height: 50px;padding-left:10px;font-size:15px;}
+    </style>
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="address">
+            
+        </div>
+        <div class="order">
+            
+        </div>
+    </div>       
+</body>
+<!-- 全局js -->
+<script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+<!-- 自定义js -->
+<script src="__PUBLIC__/admin_js/content.js?v=1.0.0"></script>
+<script src="__PUBLIC__/admin_js/plugins/layer/layer.min.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+    var oid = GetQueryString("oid");
+    $(function(){
+        //请求地址信息
+        $.post("getAddressInfoByOrderId",{oid:oid},function(data){
+            if(data.result==1){
+                var html = '<div class="row">'+
+                                '<div class="col-sm-12">'+
+                                    '<div class="contact-box">'+
+                                        '<div class="col-sm-12">'+
+                                            '<h3><i class="fa fa-user"></i>&nbsp;<strong>'+data.data.name+'</strong></h3>'+
+                                            '<p><i class="fa fa-phone"></i>&nbsp;'+data.data.tel+'</p>'+
+                                            '<p><i class="fa fa-map-marker"></i>&nbsp;'+data.data.roughly_address+data.data.detail_address+'</p>'+
+                                        '</div>'+
+                                        '<div class="clearfix"></div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+                $(".address").append(html);
+            }else if(data.result==2){
+                alert("缺少参数！");
+            }else{
+                alert("请求地址信息出错！");
+            }
+        },'json');
+        //加载订单信息
+        var loading;
+        $.ajax({
+            type:'post',
+            cache:false,
+            data:{oid:oid},
+            url:"checkOrderInfo",
+            dataType:"json",
+            beforeSend:function(){
+                loading = layer.load();
+            },
+            success:function(data){
+                if(data.result==1){
+                    html = '<div class="row">'+
+                                '<div class="col-sm-12">'+
+                                     '<div class="ibox float-e-margins">'+
+                                        '<div class="ibox-title">'+
+                                            '<h5>订单信息</h5>'+
+                                        '</div>'+
+                                        '<div class="ibox-content">'+
+                                           '<p><i class="fa fa-send-o"></i> 订单编号：'+data.data.order.order_number+'</p>'+
+                                            '<p><i class="fa fa-hourglass"></i> 下单时间：'+data.data.order.buy_time+'</p>'+
+                                            '<p><i class="fa fa-money"></i> 支付方式：'+data.data.order.pay+'</p>'+
+                                            '<p><i class="fa fa-star"></i> 订单状态：'+data.data.order.status+'</p>'+
+                                            '<p><i class="fa fa-user-secret"></i> 订单售价：'+data.data.order.price+'</p>'+
+                                            '<p><i class="fa fa-credit-card"></i> 订单备注：'+data.data.order.remark+'</p>'+
+                                            '<p><i class="fa fa-user"></i> 购买者：'+data.data.order.username+'</p>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="row">'+
+                                '<div class="col-sm-12">'+
+                                    '<div class="ibox float-e-margins">'+
+                                        '<div class="ibox-title">'+
+                                            '<h5>订单商品</h5>'+
+                                        '</div>'+
+                                        '<div class="ibox-content">'+
+                                            '<div class="table-responsive">'+
+                                                '<table class="table table-striped">'+
+                                                    '<thead>'+
+                                                        '<tr>'+
+                                                            '<th>商品图片</th>'+
+                                                            '<th>商品名称</th>'+
+                                                            '<th>所属店铺</th>'+
+                                                            '<th>商品售价</th>'+
+                                                            '<th>数量</th>'+
+                                                            '<th>规格名称</th>'+
+                                                        '</tr>'+
+                                                    '</thead>'+
+                                                    '<tbody id="table">';
+                    for(var i=0;i<data.data.pro.length;i++){
+                        html +=  '<tr>'+
+                                    '<td style="width:200px;"><img src="'+data.data.pro[i].img_path+'" style="width:150px;height:80px;" alt="" /></td>'+
+                                    '<td style="width:230px;">'+data.data.pro[i].name+'</td>'+
+                                    '<td>'+data.data.pro[i].shop_name+'</td>'+
+                                    '<td>'+data.data.pro[i].sale_price+'</td>'+
+                                    '<td>'+data.data.pro[i].num+'</td>'+
+                                    '<td>'+data.data.pro[i].sname+'</td>'+
+                                '</tr>';
+                    }
+                        html += '</tbody>'+
+                                '</table>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div class="row">'+
+                '<div class="col-sm-12">'+
+                    '<div class="ibox float-e-margins">'+
+                        '<div class="ibox-title">'+
+                            '<h5>活动信息</h5>'+
+                        '</div>'+
+                        '<div class="ibox-content">'+
+                            '<div class="table-responsive">'+
+                                '<table class="table table-striped">'+
+                                    '<thead>'+
+                                        '<tr>'+
+                                            '<th>活动名称</th>'+
+                                            '<th>活动内容</th>'+
+                                            '<th>活动条件</th>'+
+                                        '</tr>'+
+                                    '</thead>'+
+                                    '<tbody id="table">';
+                                    if(data.data.discount.list.length==0){
+                                        html += '<tr>'+
+                                                    '<td colspan="3" align="center">没有符合的活动</td>'+
+                                                '</tr>';
+                                    }else{
+                                         for(var j=0;j<data.data.discount.list.length;j++){
+                                            html += '<tr>'+
+                                                        '<td>'+data.data.discount.list[j].name+'</td>'+
+                                                        '<td>'+data.data.discount.list[j].content+'</td>'+
+                                                        '<td>'+data.data.discount.list[j].condition+'</td>'+
+                                                    '</tr>';
+                                        }
+                                    }
+                         html += '</tbody>'+
+                                '</table>';
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+  
+            '</div>';
+             $(".order").append(html);
+                }else if(data.result==2){
+                    alert("缺少参数！");
+                }else{
+                    alert("请求订单信息出错！");
+                }
+            },
+            complete: function(){
+                layer.close(loading);
+            }
+        });
+    });
+    
+
+</script>

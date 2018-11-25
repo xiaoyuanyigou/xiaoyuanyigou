@@ -1,0 +1,35 @@
+*{padding:0;margin:0;}
+body{font-family: "Microsoft yahei";background:#EEEEEE;}
+a{text-decoration: none;-webkit-tap-highlight-color:rgba(255,255,255,0);color:black;}
+div,img{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+/*用户信息样式开始*/
+.timg{display:block;width:3em;height:3em;margin:6em 10.5em;}
+.user-wrap{width:24em;height:6.9em;background: white;margin-top:0.5em;}
+.user-img{width:6.9em;height:6.9em;float:left;}
+.user-img img{width:5.5em;height:5.5em;padding:0.7em;border-radius: 50%;}
+.user-info{width:15em;height:6.9em;float:left;}
+.user-arrow{width:2.1em;height:6.9em;float:left;}
+.user-arrow img{width:1em;height:1.8em;padding-top:2.55em;}
+.username{font-size: 1.2em;padding-top:1.2em;}
+.email{font-size: 0.9em;color:#949494;padding-top:1em;
+			/*文字溢出用省略号代替*/
+			overflow:hidden;display:-webkit-box;text-overflow:ellipsis;
+			-webkit-line-clamp:1;-webkit-box-orient: vertical;}
+/*我的订单样式开始*/
+.order{width:24em;background: white;margin-top:0.5em;}
+.title{width:22.6em;height:3em;margin:0 auto;border-bottom:0.01em solid #F0F0F0;}
+.title p{float:left;line-height: 3em;}
+.title a{float:right;line-height: 3em;color:red;}
+.order-sort{width:22.6em;height:5em;margin:0 auto;}
+
+.order-sort img{width:2em;height:2em;}
+.pay,.deliver,.receive,.refund{position:relative;width:5.65em;height:5em;float:left;text-align: center;padding-top:0.8em;}
+.num{width:1.2em;height:1.2em;background:white;line-height: 1.2em;text-align:center;color:red;position:absolute;border:0.1em solid red;right:1em;border-radius:50%;top:0.3em;}
+/*功能栏样式开始*/
+.cols{width:24em;background: white;margin-top:1em;}
+.column{width:24em;height:3.3em;}
+.icon{width:3.3em;height:3.3em;float:left;}
+.icon img{width:1.9em;height:1.9em;padding:0.7em;border-radius: 1em;}
+.content{width:20.7em;height:3.3em;float:left;border-bottom:0.01em solid #F0F0F0;}
+.content p{float:left;line-height:3.3em }
+.content img{float:right;width:0.8em;height: 1.44em;padding-top:0.93em;padding-right:0.7em;}

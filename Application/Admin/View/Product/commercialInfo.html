@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>智谷科技后台管理框架 - WPP - 图片切换</title>
+    <meta name="keywords" content="WPP,后台HTML,响应式后台">
+    <meta name="description" content="WPP是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+	<link href="__PUBLIC__/admin_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin_css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+    
+<body class="gray-bg"  onload="loadInfo()">
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <div class="col-sm-8 col-sm-offset-1" >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>商品详情</h5>      
+                    </div>
+                    <div class="ibox-content ">
+                        <div class="carousel slide" id="carousel2" style="width:600px;height:500px;margin:0 auto;">
+							<!---caption 下面的圆点-->
+                           <!--  <ol class="carousel-indicators">
+                               <li data-slide-to="0" data-target="#carousel2" class="active"></li>
+                               <li data-slide-to="1" data-target="#carousel2" ></li>
+                               <li data-slide-to="2" data-target="#carousel2" class=""></li>
+                           </ol> -->
+							
+							<!--需要循环输出的图片以及文字-->                
+                            <div class="carousel-inner" style="width:100%;height:100%"> 
+
+                            </div>
+							
+							<!--左右方向箭头-->
+                            <a data-slide="prev" href="commercialInfo.html#carousel2" class="left carousel-control">
+                                <span class="icon-prev"></span>
+                            </a>
+                            <a data-slide="next" href="commercialInfo.html#carousel2" class="right carousel-control">
+                                <span class="icon-next"></span>
+                            </a>
+                        </div>
+						
+                         <div class="wrapper wrapper-content animated fadeIn">     
+                            <div class="row">
+                                <div class="tabs-container">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active" ><a data-toggle="tab" href="#tab-1" aria-expanded="true">基础信息</a>
+                                        </li>
+                                        <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">描述图片</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="tab-1" class="tab-pane active">
+                                               <!-- 商品基础信息 -->                   
+                                            <div class="ibox-content profile-content" >
+                                                <div class="ibox-info"> 
+                                                   <!--  Ajaxs在下面输出 基本信息 -->
+                                                </div>
+                                                <h5>规格</h5>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2  col-sm-offset-1 control-label ">名称</label>
+                                                    <label class="col-sm-2 control-label">原价</label>
+                                                    <label class="col-sm-2 control-label">现价</label>
+                                                     <label class="col-sm-2 control-label">库存</label>
+                                                      <label class="col-sm-2 control-label">销量</label>
+                                                </div>
+                                                <div class="ibox-standard"> 
+                                                   <!--  Ajaxs在下面输出  规格信息-->
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <div class="col-sm-12 col-sm-offset-5">
+                                                     <button class="btn btn-primary" onclick="modifyInfo()">修改</button>
+                                                    <button class="btn btn-warning" onclick="deletePro('+obj.data[i].pro_id+')">下架</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="tab-2" class="tab-pane">
+                                            <!-- 商品描述图片 -->
+                                            <div class="image-descript">
+                                                    <!-- 商品描述图片 -->      
+                                            </div>  
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	 </div>	
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/admin_js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/admin_js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/admin_js/content.js?v=1.0.0"></script>
+    
+</body>
+<script>
+        /*页面加载*/
+    function loadInfo(){
+        var id = getParam('proId');
+        if(id==null){
+            alert("非法操作");
+            window.location.href ="commercialList";//定向到首页
+        }
+        else{
+            $.ajax({
+            type:"post",
+            cache:false,
+            data:{"proId":id},
+            url:"checkProduct",
+            dataType:"json",
+            success:function(data){                
+                var obj = JSON.parse(data); 
+                
+                if(2==obj.result){
+                    alert("缺少条件");
+                    window.location.href ="commercialList";//定向到首页
+                }
+                else if(0==obj.result){
+                    alert("查询失败");
+                    window.location.href ="commercialList";//定向到首页
+                }
+                else if (3==obj.result){
+                    alert("查询结果为空");
+                    window.location.href ="commercialList";//定向到首页
+                }
+                else{
+                    var htmlImg = '';       //循环输出图片
+                    var htmldescript = '';  // 循环输出商品描述图片
+                    var htmlStandard = '';  //循环输出规格
+                    var htmlInfo = '';       //单条输出信息
+
+                    var focus='';   //推荐到首页
+                    if(1==obj.data[0].focus)
+                        focus += '(推荐)';
+                    /****************************************/
+                        /*基本信息部分*/
+                    htmlInfo +=
+                    '<h3><strong>'+obj.data[0].pro_name+'</strong>&nbsp'+focus+'</h3>'+
+                    '<div class="hr-line-dashed"><label name="proId" value="'+obj.data[0].pro_id+'"></div>'+
+                    '<h5>分类</h5>'+
+                        '<div class="col-sm-2 col-sm-offset-1">'+obj.data[0].sort_name3+'</div>'+
+                        '<div class="col-sm-2">'+obj.data[0].sort_name2+'</div>'+
+                        '<div class="col-sm-2">'+obj.data[0].sort_name1+'</div>'+
+                        '</br>'+
+                    '<div class="hr-line-dashed"></div>';
+                    /****************************************/
+                        /*规格部分*/
+                    for(var i=0;i<obj.data[1].length;i++){           
+                        htmlStandard +=
+                        '<div class="row m-t-sm ">'+
+                            '<div class="col-sm-12">'+
+                                '<span class="bar col-sm-2 col-sm-offset-1">'+obj.data[1][i].standard_name+'</span>'+
+                                '<span class="bar col-sm-2">&yen;'+obj.data[1][i].original_price+'</span>'+
+                                 '<span class="bar col-sm-2">&yen;'+obj.data[1][i].sale_price+'</span>'+
+                                '<span class="bar col-sm-2">'+obj.data[1][i].inventory+'</span>'+
+                                '<span class="bar col-sm-2">'+obj.data[1][i].sale_num+'</span>'+
+                            '</div>'+                        
+                        '</div>';
+                    }//end for
+                    /****************************************/
+                        /*基本图片部分*/
+                    for(var i=0;i<obj.data[2].length;i++){
+                        if(0==i){
+                            htmlImg +=
+                            '<div class="item active" style="width:100%;height:100%">'+
+                                '<div style="width:100%;height:100%">'+
+                                  '<img style="width:100%;height:100%" alt="image" src="'+obj.data[2][i].img_path+'">'+
+                                '</div>'+   
+                            '</div>';
+                        }//end if
+                        else{
+                            htmlImg +=
+                            '<div class="item" style="width:100%;height:100%">'+
+                                '<div style="width:100%;height:100%">'+
+                                    '<img style="width:100%;height:100%"alt="image" src="'+obj.data[2][i].img_path+'">'+
+                                '</div>'+
+                            '</div>';            
+                        }//end else
+                    }//end for  
+                    /****************************************/
+                        /* 描述图片部分*/
+                    for(var i=0;i<obj.data[3].length;i++){
+                        htmldescript +=
+                        '<div class="row" style="margin-top:20px;">'+
+                            '<img style="display:block;width:700px;margin:0 auto" src="'+obj.data[3][i].img_path+'" alt="">'+
+                        '</div>';
+                    }//end for
+                    if(htmldescript=='')
+                        htmldescript += '<p style="padding-left:20px;padding-top:30px;font-weight:bold">还没有描述图片</p>';
+            
+                        htmldescript += 
+                        '<div class="form-group" style="margin-top:20px;">'+
+                            '<div class="col-sm-12 col-sm-offset-5" >'+
+                                '<button class="btn btn-primary" style="margin-right:20px" onclick="modifyImagesInfo()">修改</button>'+
+                                '<button class="btn btn-white" onclick="backTo()">取消</button>'+
+                            '</div>'+
+                        '</div>';
+                    /****************************************/
+                        $(".ibox-info").append(htmlInfo);
+                        $(".ibox-standard").append(htmlStandard);
+                        $(".carousel-inner").append(htmlImg);
+                        $(".image-descript").append(htmldescript);
+                    }//end else            
+                }//end success 
+            })//end ajax
+        }//end else
+    }
+/*-------------------------------------------------------------------------------------------*/    /*基本信息修改button*/
+    function modifyInfo(){
+        var id = getParam('proId');
+        window.location.href ="commercialModify?proId="+id;
+    }
+        /*商品描述图修改button*/
+    function modifyImagesInfo(){
+        var id = getParam('proId');
+        window.location.href = "commercialImagesModify?proId="+id;
+    }
+        /*下架商品button*/
+    function deletePro(){
+        if(confirm("确定下架？")){
+           var id = getParam('proId');
+            $.ajax({
+                type:"post",
+                cache:false,
+                data:{"proId":id},
+                url:"deleteProduct",
+                dataType:"json",
+                success:function(data){
+                    var obj = JSON.parse(data);
+
+                    if(2==obj.result){
+                        alert("缺少参数");
+                    }else if(0==obj.reult){
+                        alert("下架失败");
+                    }else if (1==obj.result){
+                        alert("下架成功");
+                         window.history.back();//上级页面 
+                    }//end else if
+                }//end success
+            }) 
+        }//end if
+    }
+        /*获取url的函数*/
+    function getParam(paramName) { 
+        paramValue = "", isFound = !1; 
+        if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) { 
+            arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0; 
+            while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++ 
+        } 
+        return paramValue == "" && (paramValue = null), paramValue 
+    }
+</script>
+</html>
